@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/workspace/EpicFramework/examples/HelloResources/build'
+let g:netrw_dirhist_2='/workspace/xmlvm/trunk/xmlvm/src/xmlvm2objc/xsl'
+let g:netrw_dirhist_3='/workspace/EpicFramework/examples/HelloResources/build'
+let g:netrw_dirhist_4='/usr/local/lib/node_modules/underscore-cli/package'
+let g:netrw_dirhist_5='/workspace/EpicFramework/examples/HelloResources/gensrc'
+let g:netrw_dirhist_6='/workspace/EpicFramework/EpicBuilder/resources'
+let g:netrw_dirhist_7='/workspace/underscore-cli/test'
+let g:netrw_dirhist_8='/workspace/underscore-cli/package'

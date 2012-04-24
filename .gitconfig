@@ -1,0 +1,37 @@
+[user]
+  user  = ddopson-epic
+  name = Dave Dopson (epic)
+  email = ddopson@epicapplications.com
+
+[color]
+  ui = true
+
+[alias]
+  sub = submodule
+  subs = submodule foreach git 
+  co = checkout
+  unstage = reset HEAD
+  stat = status
+  st = status -- .
+  b = !git branch -vv
+  ba = !git branch -avv
+  hist = !git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short -20
+  history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  tp = !git push -nv && git pull -nv
+  pull-all = pull --all -v
+  push-all = push --all -v
+
+[status]
+  submodulesummary = true
+
+[push]
+  default = current 
+
+[pull]
+  default = current
+
+[diff]
+#  external = /usr/local/bin/diff-wrapper
+  renames = true
+  noprefix = true
+
