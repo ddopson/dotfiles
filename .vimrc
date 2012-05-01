@@ -88,3 +88,4 @@ augroup module
 augroup END
 
 
+call pathogen#infect()
