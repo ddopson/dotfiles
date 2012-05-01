@@ -20,6 +20,7 @@
   tp = !git push -nv && git pull -nv
   pull-all = pull --all -v
   push-all = push --all -v
+  pick = cherry-pick
 
 [status]
   submodulesummary = true
