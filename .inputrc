@@ -1,0 +1,4 @@
+"\e[1;2D": backward-word
+"\e[1;2C": forward-word
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
