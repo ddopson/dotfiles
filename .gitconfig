@@ -30,3 +30,6 @@
 [diff]
   renames = true
   noprefix = true
+
+[format]
+  pretty = fuller
