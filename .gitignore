@@ -21,3 +21,14 @@
 /Pictures/
 /Public/
 /bin/
+
+
+
+
+/*
+
+!/.gitignore
+!/.gitconfig
+!/.profile
+!/.vimrc
+!/.vim

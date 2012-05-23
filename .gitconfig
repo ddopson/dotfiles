@@ -23,7 +23,11 @@
   push-all = push --all -v
   dc = diff --cached
   pick = cherry-pick
-  
+  ignored = !git clean -ndX | perl -pe 's/Would remove/ignored:/'
+
+[status]
+  submodulesummary = true
+
 [push]
   default = current 
 
