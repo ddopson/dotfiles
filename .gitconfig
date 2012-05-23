@@ -21,6 +21,7 @@
   pull-all = pull --all -v
   push-all = push --all -v
   pick = cherry-pick
+  ignored = !git clean -ndX | perl -pe 's/Would remove/ignored:/'
 
 [status]
   submodulesummary = true
