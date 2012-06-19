@@ -1,0 +1,5 @@
+if [ `uname` = 'Darwin' ]; then
+	base64 -d | bzip2 -d | tar -xvf-
+else
+	base64 -di | bzip2 -d | tar -xvf- 2>&1 | egrep -v 'Ignoring unknown extended header|delayed from previous'
+fi

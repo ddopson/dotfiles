@@ -1,0 +1,33 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+my $is_mac = ( `tty` =~ m#/dev/ttys.*# );
+my $is_root = ( `whoami` =~ m/^root\s*/ );
+
+sub color {
+	return '\[\033[' . join(';', @_) . 'm\]';
+}
+my $red0 = color(0, 37, 41); # dull white on red
+my $red1 = color(1, 97, 41); # bold white on red
+my $red2 = color(1, 93, 41); # bold yellow on red
+my $grey = color(0, 30, 47);
+my $blue = color(1, 37, 44);
+my $no_color = color(0, '');
+
+# Hardcode hostname to 'localhost' on my Mac
+my $hn = ($is_mac) ? $red0 . 'localhost' : $red2 . '\h';
+
+# Highlight username when root:
+my $uu = ($is_root) ? $red1 : $red0;
+
+print "PS1='" . join('',
+                 '\n',
+      $uu,       '\u', $red0, '@', $hn,   # User@hostname
+      $grey,      ':',
+      $blue,      '\w',         # CWD
+      $no_color,  ' ',
+      $grey,      '#\!',        # hist #
+      $no_color,  ' ',
+), "'\n";
+

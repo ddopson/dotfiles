@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+
+my $str = $ARGV[0];
+
+if (! defined $str) {
+	print "usage: prepend <str>\n";
+	exit 1;
+}
+
+$|=0;
+
+while(<STDIN>) {
+	print $str, $_;
+}

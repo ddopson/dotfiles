@@ -1,0 +1,1 @@
+echo $PATH | perl -pe 's/:/\n/g'

@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use Getopt::Long;
+
+my $prefix = '';
+my $postfix = '';
+GetOptions (
+	'prefix=s' => \$prefix,
+	'postfix=s' => \$postfix
+);
+
+
+if (@ARGV == 0) {
+	print "usage: $0 <targets>\n";
+	exit;
+}
+
+my $columns = `tput cols`;
+my $w = $columns > 120 ? 120 : $columns - 10;
+my $b64 = `tar  --exclude .svn -cf- @ARGV  | bzip2 | base64 -w $w | dos2unix`;
+chomp $b64;
+my $wcl = `echo '$b64' | wc -l`;
+chomp $wcl;
+print "\n\n${prefix}echo '$b64'|base64 -di|bzip2 -d|tar -xvf-;history -d \$((HISTCMD-1));$postfix\n\n\n Size: $wcl lines x $w cols";
