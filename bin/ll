@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ -e /usr/local/bin/gls ]; then
+  LS="/usr/local/bin/gls"
+else
+  LS="$(which ls)"
+fi
+
+${LS} --color=always -FAGl
