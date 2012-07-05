@@ -1,5 +1,5 @@
 
-export PATH=~/bin:/usr/local/coreutils:/bin:/usr/bin:/usr/local/bin:/sbin:/usr/sbin:/usr/local/sbin
+export PATH=~/bin:/usr/local/coreutils:/usr/local/bin:/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/sbin
 
 
 complete -Clsscript mkscript
