@@ -6,4 +6,4 @@ else
   LS="$(which ls)"
 fi
 
-${LS} --color=always -FAGl
+${LS} --color=always -FAGl "$@"
