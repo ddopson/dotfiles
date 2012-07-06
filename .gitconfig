@@ -37,3 +37,6 @@
 
 [format]
   pretty = fuller
+
+[credential]
+  helper = osxkeychain
