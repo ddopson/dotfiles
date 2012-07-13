@@ -7,6 +7,7 @@
   ui = true
 
 [alias]
+  amend = commit --amend
   sub = submodule
   subs = submodule foreach git
   co = checkout
@@ -16,8 +17,20 @@
   st = status -- .
   b = !git branch -vv
   ba = !git branch -avv
-  hist = !git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short -20
-  history = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+
+  h     = !git --no-pager log -10 --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --color=always
+  h2    = !git --no-pager log -4  --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  h3    = !git --no-pager log -4  --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  hist  = !git --no-pager log -20 --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --color=always
+  hist2 = !git --no-pager log -10 --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  hist3 = !git --no-pager log -10 --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  history  = !git         log     --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --color=always
+  history2 = !git         log     --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  history3 = !git         log     --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+
+#| perl -pe 's/^((?:(?:\\033[^m]*m)|[| *\\x08]|[(][^)]+[)])+[a-f0-9]{7,})(?:(?:\\033[^m]*m)|[ ])+[a-f0-9]{7,}((?:(?:\\033[^m]*m)|[ ])+)[[]/${1}${2}[/'
+  histold = !git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short --date-order -20
+  historyold = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short  --date-order
   tp = !git push -nv && git pull -nv
   pull-all = pull --all -v
   push-all = push --all -v
@@ -34,6 +47,9 @@
 [diff]
   renames = true
   noprefix = true
+
+[merge]
+  conflictstyle = diff3
 
 [format]
   pretty = fuller
