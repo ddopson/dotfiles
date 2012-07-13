@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ -e /usr/local/bin/gls ]; then
+  # Homebrew installed 'coreutils'
+  /usr/local/bin/gls --color=always -FAGl "$@"
+else
+  # Fallback to default MacOS version
+  /bin/ls -FAGl "$@"
+fi
