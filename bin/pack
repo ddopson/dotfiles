@@ -19,8 +19,14 @@ if (@ARGV == 0) {
 
 my $columns = `tput cols`;
 my $w = $columns > 120 ? 120 : $columns - 10;
-my $b64 = `tar  --exclude .svn -cf- @ARGV  | bzip2 | base64 -w $w | dos2unix`;
-chomp $b64;
-my $wcl = `echo '$b64' | wc -l`;
-chomp $wcl;
+my $b64 = `tar -cf- @ARGV  | bzip2 | openssl base64 | tr -d '\n'`;
+
+my $len = length $b64;
+
+my $wcl = int(($len + $w - 1) / $w);
+
+if ($wcl > 10000) {
+  die "Output would be $wcl lines long.";
+}
+
 print "\n\n${prefix}echo '$b64'|base64 -di|bzip2 -d|tar -xvf-;history -d \$((HISTCMD-1));$postfix\n\n\n Size: $wcl lines x $w cols";
