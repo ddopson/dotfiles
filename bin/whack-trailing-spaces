@@ -1,0 +1,7 @@
+if [ -z "$*" ]; then
+  echo "Usage: $0 <file1> <file2> <file3> <...>" >&2
+  exit
+fi
+
+perl -pe 'BEGIN { $n=0 }; s/[ \t]+$// and $n++; END{ print STDERR "Fixed $n Lines ...\n" }' -i "$@"
+
