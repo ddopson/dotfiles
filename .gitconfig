@@ -6,6 +6,9 @@
 [color]
   ui = true
 
+[column]
+  ui = always
+
 [alias]
   amend = commit --amend
   sub = submodule
@@ -18,15 +21,13 @@
   b = !git branch -vv
   ba = !git branch -avv
 
-  h     = !git --no-pager log -10 --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --color=always
-  h2    = !git --no-pager log -4  --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
-  h3    = !git --no-pager log -4  --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
-  hist  = !git --no-pager log -20 --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --color=always
-  hist2 = !git --no-pager log -10 --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
-  hist3 = !git --no-pager log -10 --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
-  history  = !git         log     --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --color=always
-  history2 = !git         log     --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
-  history3 = !git         log     --graph --date-order --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(green) %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  h       = !git --no-pager log -10 --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
+  hh      = !git --no-pager log -20 --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
+  hhh     = !git            log     --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
+  hist    = !git hh
+  hstat   = !git --no-pager log -10 --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  hhstat  = !git --no-pager log -20 --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  hhhstat = !git            log     --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
 
 #| perl -pe 's/^((?:(?:\\033[^m]*m)|[| *\\x08]|[(][^)]+[)])+[a-f0-9]{7,})(?:(?:\\033[^m]*m)|[ ])+[a-f0-9]{7,}((?:(?:\\033[^m]*m)|[ ])+)[[]/${1}${2}[/'
   histold = !git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short --date-order -20
