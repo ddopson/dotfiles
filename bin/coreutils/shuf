@@ -1,0 +1,11 @@
+#!/bin/bash
+
+CMD=${0##*/}
+
+if [ "$COREUTILS" = "gnu" ] && [ -e /usr/local/bin/g$CMD ]; then
+  exec /usr/local/bin/g$CMD "$@"
+elif [ -e /usr/bin/$CMD ]; then
+  exec /usr/bin/$CMD "$@"
+elif [ -e /bin/$CMD ]; then
+  exec /bin/$CMD "$@"
+fi

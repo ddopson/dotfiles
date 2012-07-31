@@ -1,6 +1,8 @@
-
+export COREUTILS='gnu'
 export PATH="$(/bin/echo '
   ~/bin
+  ~/bin/coreutils
+  ~/.rbenv/bin/
   ~/.rbenv/shims/
   /usr/local/coreutils
 
@@ -19,8 +21,7 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=50000000
 
 complete -Clsscript mkscript
-alias ant='/workspace/SDK/ant-wrapper.sh'
-alias ant=/workspace/SDK/bin/ant-wrapper.sh
+alias ant=ant-wrapper.sh
 alias cd..='cd ..'
 alias cd...='cd ../..'
 alias cd....='cd ../../..'
@@ -29,7 +30,9 @@ alias cd......='cd ../../../../..'
 alias cd.......='cd ../../../../../..'
 
 if [ -e /usr/local/bin/gwhich ]; then
-  alias which='alias | /usr/local/bin/gwhich --tty-only --read-alias --show-dot --show-tilde'
+  alias which="(alias; declare -f) | /usr/local/bin/gwhich --tty-only --all --read-functions --read-alias --show-dot --show-tilde"
+else
+  alias which="/usr/bin/which -a"
 fi
 alias bashrc='source ~/.profile'
 
