@@ -1,0 +1,2 @@
+lsof -iTCP -sTCP:LISTEN
+
