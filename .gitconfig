@@ -10,6 +10,8 @@
   ui = always
 
 [alias]
+  fixup = commit --fixup
+  autosquash = rebase -i HEAD~10 --autosquash
   amend = commit --amend
   sub = submodule
   subs = submodule foreach git
