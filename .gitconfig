@@ -11,7 +11,7 @@
 
 [alias]
   fixup = commit --fixup
-  autosquash = rebase -i HEAD~10 --autosquash
+  autosquash = rebase -i HEAD~20 --autosquash
   amend = commit --amend
   sub = submodule
   subs = submodule foreach git
@@ -23,13 +23,16 @@
   b = !git branch -vv
   ba = !git branch -avv
 
-  h       = !git --no-pager log -10 --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
-  hh      = !git --no-pager log -20 --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
-  hhh     = !git            log     --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
-  hist    = !git hh
-  hstat   = !git --no-pager log -10 --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
-  hhstat  = !git --no-pager log -20 --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
-  hhhstat = !git            log     --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --shortstat --dirstat=changes,10 --color=always
+  hist    = !git log --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
+  h       = !git --no-pager hist -10
+  hh      = !git --no-pager hist -20
+  hhh     = !git --no-pager hist
+  hstat   = !git h --stat
+  hhstat  = !git hh --stat
+  hhhstat = !git hhh --stat
+  hstats  = !git h --shortstat --dirstat=changes,10
+  hhstats = !git hh --shortstat --dirstat=changes,10
+  hhhstats= !git hhh--shortstat --dirstat=changes,10
 
 #| perl -pe 's/^((?:(?:\\033[^m]*m)|[| *\\x08]|[(][^)]+[)])+[a-f0-9]{7,})(?:(?:\\033[^m]*m)|[ ])+[a-f0-9]{7,}((?:(?:\\033[^m]*m)|[ ])+)[[]/${1}${2}[/'
   histold = !git --no-pager log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short --date-order -20
