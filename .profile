@@ -35,5 +35,5 @@ else
   alias which="/usr/bin/which -a"
 fi
 alias bashrc='source ~/.profile'
-
+alias cuke='time bundle exec cucumber'
 eval `prompt`
