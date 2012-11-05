@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ -z "$*" ]; then
+  exec ack --help
+fi
+
+
+/usr/local/bin/ack --follow --type-set "coffee=.coffee,.coffee.erb" "$@"
