@@ -10,7 +10,7 @@
   ui = always
 
 [alias]
-  vs = "!echo From:; git hist ${1-master}.. --; echo; echo To:; git hist ..${1-master} --; echo >/dev/null"
+  vs = "!H=$(git symbolic-ref HEAD --short); echo From \"${1-master}..$H\":; git hist ${1-master}.. --; echo; echo From \"$H..${1-master}\":; git hist ..${1-master} --; echo >/dev/null"
   fixup = commit --fixup
   autosquash = rebase -i HEAD~20 --autosquash --preserve-merges
   amend = commit --amend
