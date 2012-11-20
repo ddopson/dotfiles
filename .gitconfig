@@ -10,7 +10,7 @@
   ui = always
 
 [alias]
-  vs = "!echo From:; git hist ${1-master}.. --; echo; echo To:; git hist ..${1-master} --"
+  vs = "!echo From:; git hist ${1-master}.. --; echo; echo To:; git hist ..${1-master} --; echo >/dev/null"
   fixup = commit --fixup
   autosquash = rebase -i HEAD~20 --autosquash --preserve-merges
   amend = commit --amend
