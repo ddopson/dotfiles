@@ -1,5 +1,4 @@
 #!/usr/bin/perl
-
-while(<>) {
-	print join ("\t", split), "\n";
+while (<>) {
+  print join ("\t", split), "\n";
 }
