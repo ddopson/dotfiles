@@ -10,7 +10,30 @@
   ui = always
 
 [alias]
-  vs = "!H=$(git symbolic-ref HEAD --short); echo From \"${1-master}..$H\":; git hist ${1-master}.. --; echo; echo From \"$H..${1-master}\":; git hist ..${1-master} --; echo >/dev/null"
+  vs = "! \
+    O=(); \
+    SEEN_DD=false; \
+    unset A; \
+    while [ ! -z \"$1\" ]; do \
+      if [[ \"$1\" =~ ^- ]] || $SEEN_DD; then \
+        O=(\"${O[@]}\" $1); \
+        if [ \"$1\" == \"--\" ]; then SEEN_DD=true; fi; \
+      elif [ -z \"$A\" ]; then \
+        A=\"$1\"; \
+      else \
+        O=(\"${O[@]}\" \"$1\"); \
+      fi; \
+      shift; \
+    done; \
+    if ! $SEEN_DD; then O=(\"${O[@]}\" \"--\"); fi; \
+    A=\"${A-origin/master}\"; \
+    B=\"$(git symbolic-ref HEAD --short)\"; \
+    echo From \"$A..$B:\"; \
+    git hist $A..$B \"${O[@]}\"; \
+    echo; \
+    echo From \"$B..$A:\"; \
+    git hist $B..$A \"${O[@]}\"; \
+    "
   fixup = commit --fixup
   autosquash = rebase -i HEAD~20 --autosquash --preserve-merges
   amend = commit --amend
