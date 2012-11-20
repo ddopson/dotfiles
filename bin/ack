@@ -5,4 +5,4 @@ if [ -z "$*" ]; then
 fi
 
 
-/usr/local/bin/ack --follow --type-set "coffee=.coffee,.coffee.erb" "$@"
+/usr/local/bin/ack --follow --type-set "sass=.sass" --type-set "thrift=.thrift" --type-set "coffee=.coffee,.coffee.erb" "$@"
