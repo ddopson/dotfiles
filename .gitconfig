@@ -34,6 +34,9 @@
     echo From \"$B..$A:\"; \
     git hist $B..$A \"${O[@]}\"; \
     "
+
+  recent = "! git show origin/master.. --oneline --stat=200 --color  | egrep '^ [^1-9]' | sort | column -s'|' -t"
+
   fixup = commit --fixup
   autosquash = rebase -i HEAD~20 --autosquash --preserve-merges
   amend = commit --amend
@@ -72,7 +75,7 @@
   submodulesummary = true
 
 [push]
-  default = current 
+  default = current
 
 [diff]
   renames = true
@@ -86,3 +89,6 @@
 
 [credential]
   helper = osxkeychain
+
+[git-working-branch]
+  username = ddopson
