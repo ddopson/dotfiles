@@ -1,15 +1,41 @@
-[user]
-  user = ddopson
-  name = Dave Dopson
-  email = ddopson@gmail.com
+[include]
+  # For username / creds / etc
+  path = ~/.gitconfig.local
+
+[status]
+  submodulesummary = true # meh, why not.  don't use submodules unless you have to
+
+[push]
+  default = current # this should be the safe default.  Without this, by default, 'git push' will push all branches, possibly pushing unintended changes
+
+[diff]
+  renames = true
+  noprefix = true # drops the annoying a/filename.foo b/filename.foo prefixes
+
+[merge]
+  # This is REALLY useful.  Adds 'original_version' to diffs like so:
+  # <<<<<<<
+  # OUR_VERSION
+  # |||||||
+  # ORIGNINAL_VERSION
+  # =======
+  # THEIR_VERSION
+  # >>>>>>>
+  conflictstyle = diff3
+
+[format]
+  pretty = fuller # more detail for "git show"
 
 [color]
-  ui = true
+  ui = true # everybody loves color (except for Linus :( )
 
 [column]
+  # This lets "git stat" stack multiple filenames per row (like vanilla 'ls')
   ui = always
 
 [alias]
+  # Awesome.  Compares current branch to origin/master or a branch of your choosing, displaying commits to/from the other branch
+  # Try "git vs --stat" as well
   vs = "! \
     O=(); \
     SEEN_DD=false; \
@@ -71,24 +97,3 @@
   pick = cherry-pick
   ignored = !git clean -ndX | perl -pe 's/Would remove/ignored:/'
 
-[status]
-  submodulesummary = true
-
-[push]
-  default = current
-
-[diff]
-  renames = true
-  noprefix = true
-
-[merge]
-  conflictstyle = diff3
-
-[format]
-  pretty = fuller
-
-[credential]
-  helper = osxkeychain
-
-[git-working-branch]
-  username = ddopson
