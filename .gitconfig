@@ -36,6 +36,7 @@
 [alias]
   # Awesome.  Compares current branch to origin/master or a branch of your choosing, displaying commits to/from the other branch
   # Try "git vs --stat" as well
+  # TODO: clean this up using only http://schacon.github.com/git/git.html#_low_level_commands_plumbing and put it in git-versus
   vs = "! \
     O=(); \
     SEEN_DD=false; \
@@ -61,8 +62,17 @@
     git hist $B..$A \"${O[@]}\"; \
     "
 
+  frb = "! \
+    git fetch; \
+    if git diff-files --quiet --ignore-submodules --; then \
+      git rebase origin/master; \
+    else \
+      git stash; \
+      git rebase origin/master; \
+      git stash pop; \
+    fi"
   recent = "! git show origin/master.. --oneline --stat=200 --color  | egrep '^ [^1-9]' | sort | column -s'|' -t"
-
+  ff = merge --ff-only
   fixup = commit --fixup
   autosquash = rebase -i HEAD~20 --autosquash --preserve-merges
   amend = commit --amend
@@ -71,10 +81,11 @@
   co = checkout
   stage = add -u
   unstage = reset HEAD
-  stat = status
-  st = status -- .
+  stat = status --short --branch
+  st = status --short --branch -- .
   b = !git branch -vv
   ba = !git branch -avv
+  new-workdir = "! git-new-workdir "
 
   hist    = !git log --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
   h       = !git --no-pager hist -10
