@@ -22,6 +22,10 @@
   # THEIR_VERSION
   # >>>>>>>
   conflictstyle = diff3
+  defaultToUpstream = true
+
+[core]
+  excludesfile = .gitignore.local
 
 [format]
   pretty = fuller # more detail for "git show"
@@ -56,10 +60,10 @@
     A=\"${A-origin/master}\"; \
     B=\"$(git symbolic-ref HEAD --short)\"; \
     echo From \"$A..$B:\"; \
-    git hist $A..$B \"${O[@]}\"; \
+    git --no-pager hist $A..$B \"${O[@]}\"; \
     echo; \
     echo From \"$B..$A:\"; \
-    git hist $B..$A \"${O[@]}\"; \
+    git --no-pager hist $B..$A \"${O[@]}\"; \
     "
 
   frb = "! \
