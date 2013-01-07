@@ -13,7 +13,7 @@ export PATH="$(/bin/echo '
   /usr/local/sbin
   /sbin
   /usr/sbin
-  ' | /usr/bin/xargs /bin/echo | /usr/bin/sed 's/ /:/g')"
+  ' | /usr/bin/perl -ne 'm/([^\s]+)/ and push @a, $1; END { print join ":", @a; }')"
 
 export RUBY_HEAP_MIN_SLOTS=500000
 export RUBY_HEAP_SLOTS_INCREMENT=250000
