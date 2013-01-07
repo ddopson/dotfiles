@@ -16,7 +16,7 @@ Customization
 
 ==== Add your github creds
 
-`~/.gitconfig.local`
+**`~/.gitconfig.local:`**
 ````
 [user]
   user = ddopson
