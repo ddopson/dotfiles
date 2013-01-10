@@ -8,7 +8,7 @@ cd
 git init
 git remote add origin https://github.com/ddopson/dotfiles.git
 git fetch
-fit checkout master
+git checkout master
 ````
 
 Customization
