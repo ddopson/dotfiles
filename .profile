@@ -15,25 +15,8 @@ export PATH="$(/bin/echo '
   /usr/sbin
   ' | /usr/bin/perl -ne 'm/([^\s]+)/ and push @a, $1; END { print join ":", @a; }')"
 
-export RUBY_HEAP_MIN_SLOTS=500000
-export RUBY_HEAP_SLOTS_INCREMENT=250000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=50000000
-
-complete -Clsscript mkscript
-alias ant=ant-wrapper.sh
-alias cd..='cd ..'
-alias cd...='cd ../..'
-alias cd....='cd ../../..'
-alias cd.....='cd ../../../..'
-alias cd......='cd ../../../../..'
-alias cd.......='cd ../../../../../..'
-
-if [ -e /usr/local/bin/gwhich ]; then
-  alias which="(alias; declare -f) | /usr/local/bin/gwhich --tty-only --all --read-functions --read-alias --show-dot --show-tilde"
-else
-  alias which="/usr/bin/which -a"
+if [ -f ~/.bashrc ]; then
+  . ~/.bashrc
 fi
-alias bashrc='source ~/.profile'
-alias cuke='time bundle exec cucumber'
-eval `prompt`
+
+
