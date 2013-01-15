@@ -3,6 +3,9 @@
 if [ -e /usr/local/bin/gls ]; then
   # Homebrew installed 'coreutils'
   /usr/local/bin/gls --color=always -FAGl "$@"
+elif [ -e /usr/bin/dircolors ]; then
+  # Linux
+  /bin/ls --color=always -FAGl "$@"
 else
   # Fallback to default MacOS version
   /bin/ls -FAGl "$@"
