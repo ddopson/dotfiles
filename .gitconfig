@@ -1,3 +1,7 @@
+[user]
+  user = ddopson
+  name = Dave Dopson
+  email = ddopson@gmail.com
 [include]
   # For username / creds / etc
   path = ~/.gitconfig.local
@@ -26,6 +30,7 @@
 
 [core]
   excludesfile = .gitignore.local
+  editor = vim
 
 [format]
   pretty = fuller # more detail for "git show"
