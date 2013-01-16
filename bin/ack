@@ -1,8 +1,16 @@
 #!/bin/bash
 
-if [ -z "$*" ]; then
-  exec ack --help
+if [ -x "/usr/bin/ack-grep" ]; then
+  ACK="/usr/bin/ack-grep"
+elif [ -x "/usr/local/bin/ack" ]; then
+  ACK="/usr/local/bin/ack"
+else
+  echo "Ack isn't installed"
+  exit 1
 fi
 
+if [ -z "$*" ]; then
+  exec $ACK --help
+fi
 
-/usr/local/bin/ack --follow --type-set "sass=.sass" --type-set "thrift=.thrift" --type-set "coffee=.coffee,.coffee.erb" "$@"
+$ACK --follow --type-set "sass=.sass" --type-set "thrift=.thrift" --type-set "coffee=.coffee,.coffee.erb" "$@"
