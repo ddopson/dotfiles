@@ -10,7 +10,12 @@ fi
 TMP="/tmp/$(date +%s)-$(basename "$DPKG")"
 mkdir "$TMP"
 F="$TMP/control"
-ar pf "$DPKG" control.tar.gz | tar -xzf- --to-stdout control > "$F"
+ar pf "$DPKG" control.tar.gz | tar -xzf- -C "$TMP"
+if [ ! -e "$F" ]; then
+  echo "Failed to find 'control' file in \"$1\" extracted to \"$TMP\""
+  exit 1
+fi
+
 touch "$F.timestamp"
 vim "$F"
 
