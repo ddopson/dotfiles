@@ -1,5 +1,36 @@
 # .bashrc
 
+####################################################################################################
+## BATCH-MODE CONFIG
+####################################################################################################
+
+export COREUTILS='gnu'
+export PATH="$(/bin/echo '
+  ~/bin
+  ~/bin/coreutils
+  ~/.rbenv/bin/
+  ~/.rbenv/shims/
+  /usr/local/coreutils
+
+  /usr/local/bin
+  /bin
+  /usr/bin
+
+  /usr/local/sbin
+  /sbin
+  /usr/sbin
+  ' | /usr/bin/perl -ne 'm/([^\s]+)/ and push @a, $1; END { print join ":", @a; }')"
+
+
+
+# If not running interactively, don't do anything past this point
+[ -z "$PS1" ] && return
+
+
+####################################################################################################
+## INTERACTIVE CONFIG
+####################################################################################################
+
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
@@ -43,5 +74,7 @@ else
 fi
 alias bashrc='source ~/.profile'
 alias cuke='time bundle exec cucumber'
-eval `prompt`
 
+
+#eval `prompt`
+PS1='\n\[\033[0;37;41m\]\u\[\033[0;37;41m\]@\[\033[1;93;41m\]\h\[\033[0;30;47m\]:\[\033[1;37;44m\]\w\[\033[0;m\] \[\033[0;30;47m\]#\!\[\033[0;m\] '
