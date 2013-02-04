@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+# Stolen from https://github.com/cypher/git-ruby-syntax-check/blob/master/pre-commit (MIT license)
+#
+# A hook script to verify that only syntactically valid ruby code is commited.
+# Called by git-commit with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# Put this code into a file called "pre-commit" inside your .git/hooks
+# directory, and make sure it is executable ("chmod +x .git/hooks/pre-commit")
+
+require 'open3'
+require 'colored'
+include Open3
+
+cookbooks_updated = {}
+
+commands = []
+ARGV.each{|f|
+  if f =~ /^data_bags\/([^\/]+)/
+    commands << "knife data bag from file #{$1} #{f}"
+  elsif f =~ /^roles/
+    commands << "knife role from file #{f}"
+  elsif f =~ /^cookbooks/
+    cookbook = f.split(File::SEPARATOR)[1]
+    unless cookbooks_updated[cookbook]
+      cookbooks_updated[cookbook] = true
+      commands << "knife cookbook upload #{cookbook}"
+    end
+  else
+    puts "I don't know how to publish '#{f}'"
+  end
+}
+
+commands.sort.each{|cmd|
+  puts cmd.yellow
+  puts `#{cmd}` 
+}
+
