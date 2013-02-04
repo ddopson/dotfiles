@@ -8,17 +8,16 @@ export COREUTILS='gnu'
 export PATH="$(/bin/echo '
   ~/bin
   ~/bin/coreutils
-  ~/.rbenv/bin/
-  ~/.rbenv/shims/
-  /usr/local/coreutils
+
+  ~/.rbenv/bin
+  ~/.rbenv/shims
 
   /usr/local/bin
-  /bin
-  /usr/bin
-
   /usr/local/sbin
-  /sbin
+  /usr/bin
   /usr/sbin
+  /bin
+  /sbin
   ' | /usr/bin/perl -ne 'm/([^\s]+)/ and push @a, $1; END { print join ":", @a; }')"
 
 
