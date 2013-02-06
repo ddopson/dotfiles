@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+
+# System Colors
+print "ANSI-16 colors:\n";
+for ($color = 0; $color < 16; $color++) {
+    $cc = sprintf "%2d", $color;
+    print "\033[48;5;${color}m ${cc} ";
+    print "\033[0m\n" if $color == 7 or $color == 15;
+}
+
+# Color Cube
+print "\nColor cube, 6x6x6:\n";
+$rn = 3;
+for ($r1 = 0; $r1 < 6; $r1 += $rn) {
+  for ($green = 0; $green < 6; $green++) {
+      for ($red = $r1; $red < $r1+$rn; $red++) {
+               for ($blue = 0; $blue < 6; $blue++) {
+                   $color = 16 + ($red * 36) + ($green * 6) + $blue;
+                   $ccc = sprintf "%3d", $color;
+                   print "\033[48;5;${color}m ${ccc} ";
+               }
+               print "\033[0m ";
+      }
+      print "\n";
+  }
+  print "\n"
+}
+
+# Greyscale
+print "Grayscale ramp:\n";
+for ($color = 232; $color < 256; $color++) {
+    $ccc = sprintf "%3d", $color;
+    print "\033[48;5;${color}m ${ccc} ";
+}
+print "\033[0m\n\n";
+
+# Tutorial
+$fg="\033[38;5;12m17\033[0m";
+$bg="\033[38;5;124m124\033[0m";
+print "Foreground:  echo -e '\\033[38;5;${fg}m'\n";
+print "Background:  echo -e '\\033[48;5;${bg}m'\n";
+print "Clear:       echo -e '\\033[0m'\n";
+print "Example:     echo -e '\\033[48;5;${bg};38;5;${fg}mTEXT\\033[0m'  =>  \033[48;5;124;38;5;17mTEXT\033[0m\n";
