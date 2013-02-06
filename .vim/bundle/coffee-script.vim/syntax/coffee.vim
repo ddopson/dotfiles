@@ -8,11 +8,12 @@ if exists('b:current_syntax') && b:current_syntax == 'coffee'
   finish
 endif
 
-" Include JavaScript for coffeeEmbed.
-syn include @coffeeJS syntax/javascript.vim
+syntax include @coffeeJS    syntax/javascript.vim
+syntax include @coffeeIJade syntax/ijade.vim
+syntax include @coffeeIJC   syntax/ijc.vim
 
 " Highlight long strings.
-syn sync minlines=100
+"syn sync minlines=100
 
 " CoffeeScript identifiers can have dollar signs.
 setlocal isident+=$
@@ -62,7 +63,7 @@ syn match coffeeGlobal /\<\%(null\|undefined\)\>/ display
 hi def link coffeeGlobal Type
 
 " A special variable
-syn match coffeeSpecialVar /\<\%(this\|prototype\|arguments\)\>/ display
+syn match coffeeSpecialVar /\<\%(self\|me\|this\|prototype\|arguments\)\>/ display
 hi def link coffeeSpecialVar Special
 
 " An @-variable
@@ -165,6 +166,17 @@ syn region coffeeHeredoc start=/"""/ end=/"""/ contains=@coffeeInterpString
 \                        fold
 syn region coffeeHeredoc start=/'''/ end=/'''/ contains=@coffeeBasicString
 \                        fold
+
+syn region coffeeHeredocIjc matchgroup=coffeeHeredocDelim start=/"""\s*!ijc/ end=/"""/ contains=@coffeeIJC
+syn region coffeeHeredocJade matchgroup=coffeeHeredocDelim start=/"""\s*\(!i\?jade\)/ end=/"""/ contains=@coffeeIJade
+syn match coffeeMagick /i\?jade/ containedin=coffeeHeredocDelim
+syn match coffeeMagick /ijc/
+"containedin=coffeeHeredocDelim
+
+"Comment Constant Special Identifier Statement Type PreProc Underlined Ignore
+
+hi def link coffeeMagick PreProc
+hi def link coffeeHeredocDelim String
 hi def link coffeeHeredoc String
 
 " An error for trailing whitespace, as long as the line isn't just whitespace
@@ -214,8 +226,9 @@ syn cluster coffeeAll contains=coffeeStatement,coffeeRepeat,coffeeConditional,
 \                              coffeeHeredoc,coffeeSpaceError,
 \                              coffeeSemicolonError,coffeeDotAccess,
 \                              coffeeProtoAccess,coffeeCurlies,coffeeBrackets,
-\                              coffeeParens
+\                              coffeeParens,coffeeHeredocJade,coffeeHeredocIjc
 
 if !exists('b:current_syntax')
   let b:current_syntax = 'coffee'
 endif
+
