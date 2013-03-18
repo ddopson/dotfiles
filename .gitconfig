@@ -96,7 +96,8 @@
   ba = !git branch -avv
   new-workdir = "! git-new-workdir "
 
-  hist    = !git log --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d%C(reset) %C(yellow)%h %C(reset) %ad %C(red)[%an]%C(reset) %s' --color=always
+  ghist   = !git log -g --date=relative --pretty=tformat:'%C(bold red)%d %C(bold yellow)%gD %C(reset)%C(yellow)%h %C(reset)%aD %C(red)[%an] %C(green)%gs %C(reset)%s' --color=always
+  hist    = !git log --graph --date-order --date=short --pretty=tformat:'%x08%C(bold red)%d %C(reset)%C(yellow)%h %C(reset)%ad %C(red)[%an] %C(reset)%s' --color=always
   h       = !git --no-pager hist -10
   hh      = !git --no-pager hist -20
   hhh     = !git --no-pager hist
