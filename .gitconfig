@@ -89,6 +89,15 @@
     git clean -ndX | \
     perl -pe 's/Would remove/ignored:/'"
 
+  find-children = "! \
+    REVSPEC=$1; \
+    git rev-list $REVSPEC^.. --parents | \
+      grep $REVSPEC | \
+      cut -d' ' -f1 | \
+      xargs git show -s --format=histp --graph --color=always | \
+      grep .; \
+    true"
+
   # Show recently edited files. This is being eclipsed by 'hstat'
   recent = "! \
     git show origin/master.. --oneline --stat=200 --color  | \
@@ -118,8 +127,9 @@
   tp           = !git push -nv && git pull -nv
 
 [pretty]
-  hist  = "%C(bold yellow)%h %C(bold green)(%ad) %C(reset)%C(red)[%an] %C(reset)%s %C(bold red)%d%C(reset)"
-  ghist = "%C(bold red)%d %C(bold yellow)%gD %C(reset)%C(yellow)%h %C(reset)%aD %C(red)[%an] %C(green)%gs %C(reset)%s"
+  hist      = "%C(bold yellow)%h %C(bold green)(%ad) %C(reset)%C(red)[%an] %C(reset)%s %C(bold red)%d%C(reset)"
+  histp     = "%C(bold yellow)%h %C(reset)%C(yellow)%p %C(bold green)(%ad) %C(reset)%C(red)[%an] %C(reset)%s %C(bold red)%d%C(reset)" # with parents
+  ghist     = "%C(bold red)%d %C(bold yellow)%gD %C(reset)%C(yellow)%h %C(reset)%aD %C(red)[%an] %C(green)%gs %C(reset)%s"
 
 [alias]
   hlog    = !git log --color=always --date=relative --pretty=hist
