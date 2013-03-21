@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# This is a wrapper around 'git' that resolves symlinks in the path
+# By Design, it does NOT resolve a final symlink, since that means I'm trying to add the actual symlink
+# e.g., js/ => app/assets/javascripts/mobile_v2/ (that's annoying to type)
+# so "git add js/foo.js" would auto-resolve the 'js' symlink to make git happy
+# but "git add js" would add the symlink file itself to git
+# tokens starting with '-' are ignored for obvious reasons
+
+
+# This is a hashtable (really bash? wtf)
+hput() {
+  eval "$1""$2"='$3'
+}
+hget() {
+  eval echo '${'"$1$2"'#hash}'
+}
+
+while [ ! -z "$1" ]; do
+  F="$1"
+  if [ -e "$F" ] && ! [[ "$F" =~ ^- ]]; then
+    FF="$(basename $F)"
+    F="$(dirname $F)"
+    while [ "$F" != "/" ] && [ "$F" != "." ]; do
+      if [ -h "$F" ]; then
+        F1="$F"
+        F="$(readlink "$F")"
+        if [ "$(hget "TOUCHED" "$F1")" != "touched" ]; then
+          echo "GitWrapper: Resolving '$F1' => '$F'"
+          hput "TOUCHED" "$F1" "touched"
+        fi
+      fi
+
+      B="$(basename "$F")"
+      if [ -z "$FF" ]; then
+        FF="$B"
+      else
+        FF="$B/$FF"
+      fi
+      F="$(dirname "$F")"
+    done
+    if [ "$F" == "/" ]; then
+      F="/$FF"
+    else
+      F="$FF"
+    fi
+    
+    if [ "$F" != "$1" ]; then
+      if false; then # disable b/c it's too verbose
+        echo "Resolving '$1' => '$F'"
+      fi
+    fi
+  fi
+  O=("${O[@]}" "$F"); # bash-speak for array.push
+  shift
+done
+
+# Trying to do this through manipulating $PATH in a _safe_ way is actually really hard.  This is close enough
+if [ -x /usr/local/bin/git ]; then
+  exec /usr/local/bin/git "${O[@]}"
+elif [ -x /usr/bin/git ]; then
+  exec /usr/bin/git "${O[@]}"
+elif [ -x /bin/git ]; then
+  exec /bin/git "${O[@]}"
+else
+  echo "Error: Can't find the 'git' executable!"
+  exit 1
+fi
+
