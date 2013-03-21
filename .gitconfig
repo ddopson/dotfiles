@@ -90,7 +90,7 @@
     perl -pe 's/Would remove/ignored:/'"
 
   find-children = "! \
-    REVSPEC=$1; \
+    REVSPEC="$(git rev-parse "$1")" || exit; \
     git rev-list $REVSPEC^.. --parents | \
       grep $REVSPEC | \
       cut -d' ' -f1 | \
