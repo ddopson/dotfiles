@@ -65,6 +65,7 @@ alias cd....='cd ../../..'
 alias cd.....='cd ../../../..'
 alias cd......='cd ../../../../..'
 alias cd.......='cd ../../../../../..'
+alias echo_result="echo true || echo false"  # use it like "[ ... some test ... ] && echo_result"
 
 if [ -e /usr/local/bin/gwhich ]; then
   alias which="(alias; declare -f) | /usr/local/bin/gwhich --tty-only --all --read-functions --read-alias --show-dot --show-tilde"
