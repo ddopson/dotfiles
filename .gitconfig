@@ -76,13 +76,13 @@
   # Uses 'stash' intelligently to avoid blocking on trivial working-dir changes
   frb = "! \
     git fetch; \
-    if git diff-files --quiet --ignore-submodules --; then \
-      git rebase origin/master; \
+    if git diff-index --quiet --ignore-submodules HEAD --; then \
+      git rebase origin/master \"$@\"; \
     else \
       git stash save -q 'Fetch-Rebase Stashed Changes'; \
-      git rebase origin/master; \
+      git rebase origin/master \"$@\"; \
       git stash pop -q; \
-    fi"
+    fi; true"
 
   # List files ignored by .gitignore and friends
   show-ignored = "! \
