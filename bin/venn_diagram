@@ -1,0 +1,40 @@
+#!/bin/bash
+
+A="$1"
+B="$2"
+
+if [ -z "$2" ]; then
+  echo "Usage: $0 <file1> <file2>"
+  exit 1
+fi
+
+echo "Checking sortedness ... "
+if ! sort -c "$A"; then 
+  TA="$(tempfile)"
+  echo "A: sort $A > $TA"
+  sort "$A" > "$TA"
+  A="$TA"
+fi
+
+if ! sort -c "$B"; then
+  TB="$(tempfile)"
+  echo "B: sort $B > $TB"
+  sort "$B" > "$TB"
+  B="$TB"
+fi
+
+WC_A=$(cat "$A" | wc -l)
+echo "A: $WC_A"
+
+WC_B=$(cat "$B" | wc -l)
+echo "B: $WC_B"
+
+WC_BOTH=$(comm "$A" "$B" -1 -2 | wc -l)
+echo "U(A+B): $WC_BOTH"
+
+WC_AONLY=$((WC_A - WC_BOTH))
+echo "A_ONLY: $WC_AONLY"
+
+WC_BONLY=$((WC_B - WC_BOTH))
+echo "B_ONLY: $WC_BONLY"
+
