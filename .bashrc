@@ -39,6 +39,17 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
   . /etc/bash_completion
 fi
 
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -82,3 +93,10 @@ function cdp() {
 
 eval `prompt`
 #PS1='\n\[\033[0;37;41m\]\u\[\033[0;37;41m\]@\[\033[1;93;41m\]\h\[\033[0;30;47m\]:\[\033[1;37;44m\]\w\[\033[0;m\] \[\033[0;30;47m\]#\!\[\033[0;m\] '
+
+# Google specific creds stuff ...
+if [ -x /usr/bin/prodcertstatus ]; then
+  if ! /usr/bin/prodcertstatus --check_remaining_hours 2.0; then
+    prodaccess -gsk
+  fi
+fi
