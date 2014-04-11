@@ -14,8 +14,6 @@ git checkout master
 Customization
 ----------
 
-==== Add your github creds
-
 **`~/.gitconfig.local:`**
 ````
 [user]
@@ -33,8 +31,8 @@ Customization
 
 Pushing (for me)
 ----------
+<h4> ssh-keygen </h4>
 ````bash
-# Make SSH Key
 WAT=google_desktop
 ssh-keygen -t dsa -N '' -f ~/.ssh/${WAT}_id_dsa
 ln -s ${WAT}_id_dsa .ssh/id_dsa
@@ -42,10 +40,13 @@ cat ~/.ssh/${WAT}_id_dsa.pub
 cp ~/.ssh/${WAT}_id_dsa.pub ~/.ssh_keys_pub
 git add ~/.ssh_keys_pub
 git commit -m "add pub key"
+````
 
-# open https://github.com/settings/ssh
+<h4> Add key to github </h4>
+https://github.com/settings/ssh
 
+<h4> Push </h4>
+````bash
 git remote set-url --push origin git@github.com:ddopson/dotfiles.git
 git push
-
 ````
