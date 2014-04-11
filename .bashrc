@@ -6,6 +6,7 @@
 
 export COREUTILS='gnu'
 export PATH="$(/bin/echo '
+  /google/data/ro/users/dd/ddopson/bin
   ~/bin
   ~/bin/coreutils
 
@@ -75,6 +76,9 @@ fi
 alias bashrc='source ~/.profile'
 alias cuke='time bundle exec cucumber'
 
+function cdp() {
+  cd "$(_cdp "$@")"
+}
 
 eval `prompt`
 #PS1='\n\[\033[0;37;41m\]\u\[\033[0;37;41m\]@\[\033[1;93;41m\]\h\[\033[0;30;47m\]:\[\033[1;37;44m\]\w\[\033[0;m\] \[\033[0;30;47m\]#\!\[\033[0;m\] '
