@@ -6,7 +6,7 @@ my $is_mac = ( `uname` =~ m#Darwin# );
 my $is_root = ( `whoami` =~ m/^root\s*/ );
 
 sub color {
-  return '\e[' . join(';', @_) . 'm';
+  return '\[\033[' . join(';', @_) . 'm\]';
 }
 
 my $red0 = color(0, 37, 41); # dull white on red
