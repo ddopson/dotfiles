@@ -1,10 +1,14 @@
 [user]
   user = ddopson
   name = Dave Dopson
-  email = ddopson@gmail.com
+  email = ddopson@google.com
+
 [include]
   # For username / creds / etc
   path = ~/.gitconfig.local
+
+[http]
+  cookiefile = ~/.gitcookies
 
 [status]
   submodulesummary = true # meh, why not.  don't use submodules unless you have to
@@ -117,6 +121,11 @@
   b            = !git branch -vv
   ba           = !git branch -avv
 
+  # Rebasing
+  abort        = rebase --abort
+  continue     = rebase --continue
+  skip         = rebase --skip
+
   # Meh. ...
   autosquash   = rebase -i HEAD~20 --autosquash --preserve-merges
   sub          = submodule
@@ -132,6 +141,7 @@
   ghist     = "%C(bold red)%d %C(bold yellow)%gD %C(reset)%C(yellow)%h %C(reset)%aD %C(red)[%an] %C(green)%gs %C(reset)%s"
 
 [alias]
+  hlog5    = !git log --color=always --date=relative --pretty=hist --grep='^(?!git5:).' --perl-regexp
   hlog    = !git log --color=always --date=relative --pretty=hist
 
   ghist   = !git hlog -g --pretty=ghist
@@ -141,6 +151,11 @@
   hh      = !git --no-pager hist -20
   hhh     = !git --no-pager hist
 
+  hist5    = !git hlog5 --graph --date-order
+  h5       = !git --no-pager hist5 -10
+  hh5      = !git --no-pager hist5 -20
+  hhh5     = !git --no-pager hist5
+
   histstat= "!git h --stat=160,160 \"$@\" | perl -ne '/([|*])/; if($1 eq \"*\") { print } else { m/[|] *[0-9]/ and print }'; true"
   hstat   = !git --no-pager histstat -10
   hhstat  = !git --no-pager histstat -20
@@ -149,5 +164,3 @@
   hstats  = !git h --shortstat --dirstat=changes,10
   hhstats = !git hh --shortstat --dirstat=changes,10
   hhhstats= !git hhh--shortstat --dirstat=changes,10
-
-
