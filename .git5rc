@@ -1,0 +1,4 @@
+# git5 is a Google thing
+
+[alias]
+ediff = diff --exported

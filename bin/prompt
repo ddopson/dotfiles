@@ -2,8 +2,8 @@
 use strict;
 use warnings;
 
-my $is_mac = ( `uname` =~ m#Darwin# );
-my $is_root = ( `whoami` =~ m/^root\s*/ );
+my $is_mac = ( `PATH=/bin:/usr/bin uname` =~ m#Darwin# );
+my $is_root = ( `PATH=/bin:/usr/bin whoami` =~ m/^root\s*/ );
 
 sub color {
   return '\[\033[' . join(';', @_) . 'm\]';
@@ -17,7 +17,7 @@ my $blue = color(1, 37, 44);
 my $no_color = color(0, '');
 
 # Hardcode hostname to 'localhost' on my Mac
-my $hn = ($is_mac) ? $red0 . 'localhost' : $red2 . `hostname`;
+my $hn = ($is_mac) ? $red0 . 'localhost' : $red2 . `PATH=/bin:/usr/bin hostname`;
 
 $hn =~ s/\n//;
 $hn =~ s/[.]corp[.]google[.]com//;

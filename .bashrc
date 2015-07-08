@@ -47,8 +47,11 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -91,9 +94,6 @@ function cdp() {
   cd "$(_cdp "$@")"
 }
 
-eval `prompt`
-#PS1='\n\[\033[0;37;41m\]\u\[\033[0;37;41m\]@\[\033[1;93;41m\]\h\[\033[0;30;47m\]:\[\033[1;37;44m\]\w\[\033[0;m\] \[\033[0;30;47m\]#\!\[\033[0;m\] '
-
 # Google specific creds stuff ...
 if [ -x /usr/bin/prodcertstatus ]; then
   if ! /usr/bin/prodcertstatus --check_remaining_hours 2.0; then
@@ -105,3 +105,6 @@ if [ -d ~/google-cloud-sdk ]; then
   source ~/google-cloud-sdk/path.bash.inc
   source ~/google-cloud-sdk/completion.bash.inc
 fi
+
+# Make a nice prompt
+eval $(~/bin/prompt)

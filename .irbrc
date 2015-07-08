@@ -1,3 +1,5 @@
+# This file sets up the inline-Ruby (irb) environment
+
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'readline.so'

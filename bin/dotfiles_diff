@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd ~/dotfiles
+git diff --stat
+git diff

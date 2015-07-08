@@ -6,9 +6,8 @@ Installation
 ````bash
 cd
 git init
-git remote add origin https://github.com/ddopson/dotfiles.git
-git fetch
-git checkout master
+git clone https://github.com/ddopson/dotfiles.git
+./dotfiles/setup.sh # symlink dotfiles, making dated backups of existing versions
 ````
 
 Customization
