@@ -1,7 +1,9 @@
-[user]
-  user = ddopson
-  name = Dave Dopson
-  email = ddopson@google.com
+
+# Put this stuff in ~/.gitconfig.local
+# [user]
+#   user = ddopson
+#   name = Dave Dopson
+#   email = ddopson@google.com
 
 [include]
   # For username / creds / etc
@@ -14,7 +16,9 @@
   submodulesummary = true # meh, why not.  don't use submodules unless you have to
 
 [push]
-  default = current # this should be the safe default.  Without this, by default, 'git push' will push all branches, possibly pushing unintended changes
+  # 'current' should be the safe default.  Without this, by default, 'git push'
+  # will push all branches, possibly pushing unintended changes
+  default = current
 
 [diff]
   renames = true
@@ -87,6 +91,18 @@
       git rebase origin/master \"$@\"; \
       git stash pop -q; \
     fi; true"
+
+  # Rebase-interactive: allows editing the specified commit
+  rbi = "! git rebase -i $1^"
+  rbh1         = rebase -i HEAD^
+  rbh2         = rebase -i HEAD^^
+  rbh3         = rebase -i HEAD^^^
+  rbh4         = rebase -i HEAD^^^^
+  rbh5         = rebase -i HEAD^^^^^
+  rbh6         = rebase -i HEAD^^^^^^
+  rbh7         = rebase -i HEAD^^^^^^^
+  rbh8         = rebase -i HEAD^^^^^^^^
+  rbh9         = rebase -i HEAD^^^^^^^^^
 
   # List files ignored by .gitignore and friends
   show-ignored = "! \

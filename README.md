@@ -30,22 +30,9 @@ Customization
 
 Pushing (for me)
 ----------
-<h4> ssh-keygen </h4>
-````bash
-WAT=google_desktop
-ssh-keygen -t dsa -N '' -f ~/.ssh/${WAT}_id_dsa
-ln -s ${WAT}_id_dsa .ssh/id_dsa
-cat ~/.ssh/${WAT}_id_dsa.pub
-cp ~/.ssh/${WAT}_id_dsa.pub ~/.ssh_keys_pub
-git add ~/.ssh_keys_pub
-git commit -m "add pub key"
+**`~/.netrc:`**
 ````
-
-<h4> Add key to github </h4>
-https://github.com/settings/ssh
-
-<h4> Push </h4>
-````bash
-git remote set-url --push origin git@github.com:ddopson/dotfiles.git
-git push
+machine github.com
+login ddopson@gmail.com
+password 1234567891
 ````
