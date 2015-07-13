@@ -31,6 +31,6 @@ print "PS1='" . join('',
       $grey,      ':',
       $blue,      '\w',         # CWD
       $no_color,  '\n',
-      $grey,      '\t #\!',        # hist #
+      $grey,      '\t #\#',        # hist #
       $no_color,  ' ',
 ), "'\n";

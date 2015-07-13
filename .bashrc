@@ -39,16 +39,21 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
   . /etc/bash_completion
 fi
 
-# don't put duplicate lines or lines starting with space in the history.
+# For setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+# Don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
+# Append to the history file; don't overwrite it.
 shopt -s histappend
 
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=10000
-HISTFILESIZE=20000
+# Sync with ~/.bash_history after every command. "-a" flushes to disk and "-n" loads from disk.
+# See http://superuser.com/questions/211966/how-do-i-keep-my-bash-history-across-sessions
+# With sync + histappend, commands typed in one window become instantly available to CTL-R in another window.
+PROMPT_COMMAND='history -a; history -n'
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
