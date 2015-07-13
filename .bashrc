@@ -19,6 +19,8 @@ export PATH="$(/bin/echo '
   /usr/sbin
   /bin
   /sbin
+
+  ~/google-cloud-sdk/bin
   ' | /usr/bin/perl -ne 'm/([^\s]+)/ and push @a, $1; END { print join ":", @a; }')"
 
 
