@@ -4,13 +4,12 @@
 #   user = ddopson
 #   name = Dave Dopson
 #   email = ddopson@google.com
+# [http]
+#  cookiefile = $HOME/.gitcookies - needs absolute path
 
 [include]
   # For username / creds / etc
   path = ~/.gitconfig.local
-
-[http]
-  cookiefile = ~/.gitcookies
 
 [status]
   submodulesummary = true # meh, why not.  don't use submodules unless you have to
