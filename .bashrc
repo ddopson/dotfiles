@@ -81,6 +81,7 @@ if [ `uname` = "Darwin" ]; then
   alias ant=ant-wrapper.sh
 fi
 
+alias cdp='cd -P'
 alias cd..='cd ..'
 alias cd...='cd ../..'
 alias cd....='cd ../../..'
@@ -96,10 +97,6 @@ else
 fi
 alias bashrc='source ~/.profile'
 alias cuke='time bundle exec cucumber'
-
-function cdp() {
-  cd "$(_cdp "$@")"
-}
 
 # Google specific creds stuff ...
 if [ -x /usr/bin/prodcertstatus ]; then
