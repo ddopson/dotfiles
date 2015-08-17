@@ -101,7 +101,7 @@ alias cuke='time bundle exec cucumber'
 # Google specific creds stuff ...
 if [ -x /usr/bin/prodcertstatus ]; then
   if ! /usr/bin/prodcertstatus --check_remaining_hours 2.0; then
-    prodaccess -gsk --ssh_on_security_key
+    prodaccess
   fi
 fi
 
