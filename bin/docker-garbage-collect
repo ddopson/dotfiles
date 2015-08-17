@@ -1,0 +1,14 @@
+#!/bin/bash
+
+finished=$(docker ps -a | grep Exited | cut -d" " -f1)
+if [ "$finished" != "" ]; then
+  echo "Killing finished containers:" $finished
+  docker rm $finished
+fi
+
+garbage=$(docker images | egrep '^<none>' | perl -pe 's/ +/\t/g' | cut -f3)
+if [ "$garbage" != "" ]; then
+  echo "Deleting orphaned images:" $garbage
+  docker rmi $garbage
+fi
+
