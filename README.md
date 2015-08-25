@@ -5,7 +5,6 @@ Installation
 ----------
 ````bash
 cd
-git init
 git clone https://github.com/ddopson/dotfiles.git
 ./dotfiles/setup.sh # symlink dotfiles, making dated backups of existing versions
 ````
