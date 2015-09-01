@@ -17,6 +17,7 @@ function backup_and_link() {
 }
 
 backup_and_link .bashrc
+backup_and_link .profile
 backup_and_link .gitconfig
 backup_and_link .git5rc
 backup_and_link .inputrc
