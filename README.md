@@ -27,6 +27,13 @@ Customization
   token = a123uber456secret789ceprivate000key78
 ````
 
+**`~/.netrc:`**
+````
+machine github.com
+login ddopson@gmail.com
+password SECRET_PASSWORD
+````
+
 Pushing (for me)
 ----------
 **`~/.netrc:`**
