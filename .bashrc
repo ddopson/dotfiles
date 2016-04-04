@@ -55,7 +55,9 @@ shopt -s histappend
 # Sync with ~/.bash_history after every command. "-a" flushes to disk and "-n" loads from disk.
 # See http://superuser.com/questions/211966/how-do-i-keep-my-bash-history-across-sessions
 # With sync + histappend, commands typed in one window become instantly available to CTL-R in another window.
-PROMPT_COMMAND='history -a; history -n'
+# Actually, scratch that; full sync is driving me crazy.  Better to have per-window history with a merged view
+# for reloading history on login.
+PROMPT_COMMAND='history -a'
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
