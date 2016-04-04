@@ -114,3 +114,5 @@ endif
 
 " Pathogen for managing other vim plugins
 call pathogen#infect()
+
+" source /usr/share/vim/google/google.vim
