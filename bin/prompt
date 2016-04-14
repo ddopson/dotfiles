@@ -2,13 +2,25 @@
 use strict;
 use warnings;
 
+# First, look up some strings.
 my $is_mac = ( `PATH=/bin:/usr/bin uname` =~ m#Darwin# );
 my $is_root = ( `PATH=/bin:/usr/bin whoami` =~ m/^root\s*/ );
 
-sub color {
-  return '\[\033[' . join(';', @_) . 'm\]';
-}
+my $hostname = ($is_mac) ? 'localhost' : `PATH=/bin:/usr/bin hostname`;
+$hostname =~ s/\n//;
+$hostname =~ s/[.]corp[.]google[.]com//;
 
+# Constants.
+my $user = '\u';
+my $cwd = '\w';
+my $timestamp = '\t';
+my $cmd_num = '\#';
+
+# Colors.
+sub color { return '\[\033[' . join(';', @_) . 'm\]'; }
+my $green0 = color(0, 37, 42); # dull white on green
+my $green1 = color(1, 97, 42); # dull white on green
+my $green2 = color(1, 93, 42); # dull white on green
 my $red0 = color(0, 37, 41); # dull white on red
 my $red1 = color(1, 97, 41); # bold white on red
 my $red2 = color(1, 93, 41); # bold yellow on red
@@ -16,21 +28,32 @@ my $grey = color(0, 30, 47);
 my $blue = color(1, 37, 44);
 my $no_color = color(0, '');
 
-# Hardcode hostname to 'localhost' on my Mac
-my $hn = ($is_mac) ? $red0 . 'localhost' : $red2 . `PATH=/bin:/usr/bin hostname`;
-
-$hn =~ s/\n//;
-$hn =~ s/[.]corp[.]google[.]com//;
-
 # Highlight username when root:
-my $uu = ($is_root) ? $red1 : $red0;
+my $c_user = $red0;
+my $c_host0 = $red0;
+my $c_host = ($hostname eq 'localhost') ? $red0
+           : ($hostname eq 'ddopson.hot') ? $red1
+           : ($hostname eq 'ddopson.nyc') ? $red2 
+           : $green2;
 
+# Make root an eyesore!
+if ($is_root) {
+  $c_user = $green1;
+  $c_host0 = $red2;
+  $c_host = $green2;
+}
+
+# Put it all together.
 print "PS1='" . join('',
-                 '\n',
-      $uu,       '\u', $red0, '@', $hn,   # User@hostname
+                  '\n',
+      $c_user,    $user,
+      $c_host0,   '@',
+      $c_host,    $hostname,
       $grey,      ':',
-      $blue,      '\w',         # CWD
+      $blue,      $cwd,
       $no_color,  '\n',
-      $grey,      '\t #\#',        # hist #
+      $grey,      $timestamp,
+                  ' #',
+                  $cmd_num,
       $no_color,  ' ',
 ), "'\n";
