@@ -11,8 +11,10 @@ function backup_and_link() {
     return
   fi
   if [ -e "$F" ]; then
+    echo "Backing up $F as $F.bak.$T"
     mv "$F" "$F.bak.$T"
   fi
+  echo "Linking $F -> $TARGET"
   ln -snf "$TARGET" "$F"
 }
 
