@@ -10,6 +10,8 @@ export PATH="$(/bin/echo '
   ~/bin
   ~/bin/coreutils
 
+  /usr/brew/bin
+
   ~/.rbenv/bin
   ~/.rbenv/shims
 
