@@ -49,11 +49,118 @@
   # This lets "git stat" stack multiple filenames per row (like vanilla 'ls')
   ui = always
 
+[pretty]
+  # Key:
+  # %h: abbreviated commit hash
+  # %ad: author date (format respects --date= option)
+  # %an: author name
+  # %s: subject
+  # %d: ref names, like the --decorate option of git-log
+  hist      = "\
+%C(bold yellow)%h\
+%C(bold green) (%ar)\
+%C(reset)%C(red) [%an]\
+%C(reset) %s\
+%C(bold red) %d\
+%C(reset)"
+  histp     = "\
+%C(reset)%C(yellow)%p\
+%C(reset) ->\
+%C(bold yellow)%h\
+%C(bold green) (%ad)\
+%C(reset)%C(red) [%an]\
+%C(reset) %s\
+%C(bold red) %d\
+%C(reset)"
+
+  # Key:
+  # %h: abbreviated commit hash
+  # %d: ref names, like the --decorate option of git-log
+  # %gD: reflog selector, e.g., refs/stash@{1}
+  # %aD: author date, RFC2822 style
+  # %aN: author name (respecting .mailmap, see git-shortlog(1) or git-blame(1))
+  # %gs: reflog subject
+  # %s: subject
+  ghist     = "\
+%C(bold yellow) %h\
+%C(bold red) %d\
+%C(bold yellow) %gD\
+%C(reset) %aD\
+%C(red) [%an]\
+%C(green) %gs\
+%C(reset) %s"
+
+# DAILY: aliases core to my workflow.
 [alias]
-  # Awesome.  Compares current branch to origin/master or a branch of your choosing, displaying commits to/from the other branch
+  # Short Forms
+  co           = checkout
+  stat         = status --short --branch
+  ss           = show --stat
+  dc           = diff --cached
+  fixup        = commit --fixup
+  amend        = commit --amend --no-edit
+  pick         = cherry-pick
+  ff           = merge --ff-only
+  b            = !git branch -vv
+  ba           = !git branch -avv
+  vs           = !git --paginate versus # Defined below.
+
+  # Rebasing
+  abort        = rebase --abort
+  continue     = rebase --continue
+  skip         = rebase --skip
+
+  # Meh. ...
+  autosquash   = rebase -i HEAD~20 --autosquash --preserve-merges
+
+  # Log w/o merges.
+  hlog    = !git log --graph --max-parents=1 --date-order --color=always --pretty=hist
+  h       = !git --no-pager hlog -10
+  hh      = !git --no-pager hlog -20
+  hhh     = !git --no-pager hlog -40
+  hhhh    = !git --no-pager hlog
+
+  # Log w/ merges.
+  mlog    = !git log --graph --date-order --color=always --pretty=hist
+  m       = !git --no-pager mlog -10
+  mm      = !git --no-pager mlog -20
+  mmm     = !git --no-pager mlog -40
+  mmmm    = !git --no-pager mlog
+
+  # Reflog history
+  glog    = !git log --color=always --date=relative -g --invert-grep --grep=commit: --pretty=ghist
+  g       = !git --no-pager glog -10
+  gg      = !git --no-pager glog -20
+  ggg     = !git --no-pager glog -40
+  gggg    = !git --no-pager glog
+
+  histstat= "!\
+    git h --stat=160,160 \"$@\" \
+      | perl -ne ' \
+        /([|*])/; \
+        if($1 eq \"*\") { \
+          print \
+        } else { \
+          m/[|] *[0-9]/ and print \
+        }'; \
+    true"
+  hstat   = !git --no-pager histstat -10
+  hhstat  = !git --no-pager histstat -20
+  hhhstat = !git --no-pager histstat
+
+  hstats  = !git h --shortstat --dirstat=changes,10
+  hhstats = !git hh --shortstat --dirstat=changes,10
+  hhhstats= !git hhh--shortstat --dirstat=changes,10
+
+################################################################################
+# USEFUL ALIASES (ala git's "porcelain")
+[alias]
+  # git-versus compares the current branch to origin/master or a branch of your
+  # choosing, displaying commits to/from the other branch
   # Try "git vs --stat" as well
-  # TODO: clean this up using only http://schacon.github.com/git/git.html#_low_level_commands_plumbing and put it in git-versus
-  vs = "! \
+  # TODO: clean this up to use only plumbing commands:
+  # http://schacon.github.com/git/git.html#_low_level_commands_plumbing
+  versus = "! \
     O=(); \
     SEEN_DD=false; \
     unset A; \
@@ -69,14 +176,30 @@
       shift; \
     done; \
     if ! $SEEN_DD; then O=(\"${O[@]}\" \"--\"); fi; \
+    if [ -z \"$A\" ]; then \
+      A=$(git first-valid-rev origin/master blank); \
+    fi; \
     A=\"${A-origin/master}\"; \
-    B=\"$(git symbolic-ref HEAD --short)\"; \
+    B=\"$(git symbolic-ref HEAD --short || git rev-parse HEAD)\"; \
     echo From \"$A..$B:\"; \
-    git --no-pager hist $A..$B \"${O[@]}\"; \
+    git --no-pager hlog $A..$B \"${O[@]}\"; \
     echo; \
     echo From \"$B..$A:\"; \
-    git --no-pager hist $B..$A \"${O[@]}\"; \
+    git --no-pager hlog $B..$A \"${O[@]}\"; \
     "
+
+  # For repos with multiple working trees [git-worktree]. Parking a secondary
+  # working-dir on a 'detached' head (ie, not a named branch) prevents the
+  # situation where changes to the named branch, made on he primary working-dir,
+  # manifest as an inverse diff on the secondary working-dir (shows up 'green',
+  # ie, staged but uncommitted).
+  detach = !"\
+    if ! git symbolic-ref --quiet HEAD >/dev/null; then \
+      echo \"Already detached\" && exit; \
+    fi; \
+    echo \"Detaching HEAD from $(git current-branch) to $(git rev-parse HEAD)\"; \
+    git-checkout --quiet $(git rev-parse HEAD)"
+  retach = !git-checkout $(git name-rev --name-only HEAD)
 
   # Fetch-Rebase: pure AWESOMEness.
   # Fetches 'origin' and rebases the current branch on top of origin/master.
@@ -117,65 +240,45 @@
       grep .; \
     true"
 
-  # Show recently edited files. This is being eclipsed by 'hstat'
-  recent = "! \
-    git show origin/master.. --oneline --stat=200 --color  | \
-    egrep '^ [^1-9]' | \
-    sort | \
-    column -s'|' -t"
+  #############################################################################
+  # PLUMBING: not intended for direct use.
 
-  # Short Forms
-  co           = checkout
-  stat         = status --short --branch
-  st           = status --short --branch -- .
-  dc           = diff --cached
-  fixup        = commit --fixup
-  amend        = commit --amend
-  pick         = cherry-pick
-  ff           = merge --ff-only
-  b            = !git branch -vv
-  ba           = !git branch -avv
+  # Plunbing: Print the current branch name.
+  current-branch = symbolic-ref --quiet --short HEAD
 
-  # Rebasing
-  abort        = rebase --abort
-  continue     = rebase --continue
-  skip         = rebase --skip
+  # Plumbing: echo back the first rev name that exists.
+  first-valid-rev = "! \
+    while [ ! -z \"$1\" ]; do \
+      git rev-parse -q --verify --symbolic \"$1\" && exit; \
+      shift; \
+    done; \
+    # None found \
+    exit 1 \
+    "
 
-  # Meh. ...
-  autosquash   = rebase -i HEAD~20 --autosquash --preserve-merges
-  sub          = submodule
-  subs         = submodule foreach git
-  stage        = add -u
-  unstage      = reset HEAD
-  new-workdir  = "! git-new-workdir "
-  tp           = !git push -nv && git pull -nv
-
-[pretty]
-  hist      = "%C(bold yellow)%h %C(bold green)(%ad) %C(reset)%C(red)[%an] %C(reset)%s %C(bold red)%d%C(reset)"
-  histp     = "%C(bold yellow)%h %C(reset)%C(yellow)%p %C(bold green)(%ad) %C(reset)%C(red)[%an] %C(reset)%s %C(bold red)%d%C(reset)" # with parents
-  ghist     = "%C(bold red)%d %C(bold yellow)%gD %C(reset)%C(yellow)%h %C(reset)%aD %C(red)[%an] %C(green)%gs %C(reset)%s"
-
+###############################################################################
+# DEMO: demonstrate git's behavior and effed-up flags architecture.
 [alias]
-  hlog5    = !git log --color=always --date=relative --pretty=hist --grep='^(?!git5:).' --perl-regexp
-  hlog    = !git log --color=always --date=relative --pretty=hist
-
-  ghist   = !git hlog -g --pretty=ghist
-
-  hist    = !git hlog --graph --date-order
-  h       = !git --no-pager hist -10
-  hh      = !git --no-pager hist -20
-  hhh     = !git --no-pager hist
-
-  hist5    = !git hlog5 --graph --date-order
-  h5       = !git --no-pager hist5 -10
-  hh5      = !git --no-pager hist5 -20
-  hhh5     = !git --no-pager hist5
-
-  histstat= "!git h --stat=160,160 \"$@\" | perl -ne '/([|*])/; if($1 eq \"*\") { print } else { m/[|] *[0-9]/ and print }'; true"
-  hstat   = !git --no-pager histstat -10
-  hhstat  = !git --no-pager histstat -20
-  hhhstat = !git --no-pager histstat
-
-  hstats  = !git h --shortstat --dirstat=changes,10
-  hhstats = !git hh --shortstat --dirstat=changes,10
-  hhhstats= !git hhh--shortstat --dirstat=changes,10
+  # Document symbolic name patterns.
+  #    {input}       =  {symbolic0}  |    {symbolic1}    |  {symbolic2}
+  #  --------------------------------|-------------------|-------------
+  #  HEAD(=branch)   =     HEAD      |      branch       |    branch
+  #  HEAD(=88916d7)  =     HEAD      |  exported/branch  |      ''
+  #  branch          =    branch     |      branch       |      ''
+  #  invalid         =      ''       |     {error!}      |      ''
+  symbolic0 = rev-parse --verify --quiet --symbolic  # Literal.
+  symbolic1 = name-rev --always --name-only          # Branch name.
+  symbolic2 = symbolic-ref --quiet --short           # HEAD-to-branch-name (one-trick-pony)
+  symbolic-demo = !"\
+    BNAME=cluston_2x2k; \
+    HASH=88916d7; \
+    for method in symbolic0 symbolic1 symbolic2; do \
+      git checkout --quiet $BNAME || exit; \
+      echo \"$method: HEAD => $(git $method HEAD)\"; \
+      git checkout --quiet $HASH || exit; \
+      for name in HEAD $BNAME $HEAD inval1d; do \
+        echo \"$method: $name => $(git $method $name)\"; \
+      done; \
+      echo; \
+    done \
+    "
