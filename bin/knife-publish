@@ -35,6 +35,6 @@ ARGV.each{|f|
 
 commands.sort.each{|cmd|
   puts cmd.yellow
-  puts `#{cmd}` 
+  puts `#{cmd}`
 }
 

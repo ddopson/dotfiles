@@ -44,7 +44,7 @@ while [ ! -z "$1" ]; do
     else
       F="$FF"
     fi
-    
+
     if [ "$F" != "$1" ]; then
       if false; then # disable b/c it's too verbose
         echo "Resolving '$1' => '$F'"

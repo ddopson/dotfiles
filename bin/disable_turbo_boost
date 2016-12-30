@@ -1,0 +1,8 @@
+for i in $(seq 0 11); do
+ echo 3500000 > /sys/devices/system/cpu/cpu$i/cpufreq/scaling_max_freq;
+done
+
+for i in $(seq 6 11); do
+ echo 0 > /sys/devices/system/cpu/cpu$i/online
+done
+

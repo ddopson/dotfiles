@@ -6,7 +6,7 @@ BASE=dotfiles
 
 function backup_and_link() {
   F="$1"
-  TARGET="$BASE/$F"	
+  TARGET="$BASE/$F"
   if [ "$(readlink $F)" = "$TARGET" ]; then
     return
   fi

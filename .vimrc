@@ -17,7 +17,7 @@ set autoindent            " always set autoindenting on
 "imap <F3> <ESC>:set autoindent<CR>
 
 map ` :set nonumber<CR>:set paste<CR>i
-au InsertLeave * set nopaste 
+au InsertLeave * set nopaste
 au InsertLeave * set number
 set showmode
 

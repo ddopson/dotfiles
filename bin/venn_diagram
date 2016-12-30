@@ -9,7 +9,7 @@ if [ -z "$2" ]; then
 fi
 
 echo "Checking sortedness ... "
-if ! sort -c "$A"; then 
+if ! sort -c "$A"; then
   TA="$(tempfile)"
   echo "A: sort $A > $TA"
   sort "$A" > "$TA"

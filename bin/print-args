@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while (( "$#" )); do
+  echo $1
+  shift
+done
+echo
+echo "ENV:"
+echo
+env

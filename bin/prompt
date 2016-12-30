@@ -33,7 +33,7 @@ my $c_user = $red0;
 my $c_host0 = $red0;
 my $c_host = ($hostname eq 'localhost') ? $red0
            : ($hostname eq 'ddopson.hot') ? $red1
-           : ($hostname eq 'ddopson.nyc') ? $red2 
+           : ($hostname eq 'ddopson.nyc') ? $red2
            : $green2;
 
 # Make root an eyesore!

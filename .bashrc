@@ -81,7 +81,7 @@ export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
 export RUBY_GC_MALLOC_LIMIT=50000000
 
 # Ant color support on MacOS
-if [ `uname` = "Darwin" ]; then 
+if [ `uname` = "Darwin" ]; then
   alias ant=ant-wrapper.sh
 fi
 
