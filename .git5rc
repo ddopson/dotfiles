@@ -2,3 +2,6 @@
 
 [alias]
 ediff = diff --exported
+
+[pending]
+short = true
