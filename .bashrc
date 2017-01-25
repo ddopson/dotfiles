@@ -6,7 +6,7 @@
 
 export COREUTILS='gnu'
 export PATH="$(/bin/echo '
-  /google/data/ro/users/dd/ddopson/bin
+  ~/gbin
   ~/bin
   ~/bin/coreutils
 
