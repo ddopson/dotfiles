@@ -117,3 +117,8 @@ fi
 
 # Make a nice prompt
 eval $(~/bin/prompt)
+
+if [ "$TERM" = "screen" ]; then
+  # Fix issues w/ VIM handling "screen" in bonkers ways.
+  TERM=xterm-256color
+fi
