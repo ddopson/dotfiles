@@ -99,19 +99,6 @@ if has("cscope") && filereadable("/usr/bin/cscope")
   set csverb
 endif
 
-
-" Syntax Highlighting - no this isn't, wtf is this again?
-if &term=="xterm"
-  set t_Co=256
-  "set t_Sb=^[[4%dm
-  "set t_Sf=^[[3%dm
-  set t_AB=<Esc>[48;5;%dm
-  set t_AF=<Esc>[38;5;%dm
-endif
-
-
-
-
 " Pathogen for managing other vim plugins
 call pathogen#infect()
 
