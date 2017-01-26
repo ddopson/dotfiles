@@ -1,0 +1,2 @@
+echo tmux -CC attach
+tmux -CC attach
