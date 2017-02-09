@@ -102,8 +102,8 @@ fi
 alias bashrc='source ~/.profile'
 alias cuke='time bundle exec cucumber'
 
-if [ -x ~/gbin/refresh-creds ]; then
-  ~/gbin/refresh-creds
+if [ -x ~/refresh-creds ]; then
+  ~/refresh-creds
 fi
 
 if [ -d ~/google-cloud-sdk ]; then
