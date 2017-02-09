@@ -1,0 +1,10 @@
+#!/bin/bash
+
+git rev-parse 2>/dev/null || exit
+
+echo -ne '\033[38;5;15m' # bold-white-fg
+BRANCH=$(git symbolic-ref --quiet --short HEAD)
+echo -n "$BRANCH "
+git log -1 --format='%C(bold yellow)%h%C(reset)'
+
+

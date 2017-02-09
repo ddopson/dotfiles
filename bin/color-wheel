@@ -37,7 +37,7 @@ print "\033[0m\n\n";
 # Tutorial
 $fg="\033[38;5;12m17\033[0m";
 $bg="\033[38;5;124m124\033[0m";
-print "Foreground:  echo -e '\\033[38;5;${fg}m'\n";
-print "Background:  echo -e '\\033[48;5;${bg}m'\n";
-print "Clear:       echo -e '\\033[0m'\n";
+print "Foreground:  echo -ne '\\033[38;5;${fg}m'\n";
+print "Background:  echo -ne '\\033[48;5;${bg}m'\n";
+print "Clear:       echo -ne '\\033[0m'\n";
 print "Example:     echo -e '\\033[48;5;${bg};38;5;${fg}mTEXT\\033[0m'  =>  \033[48;5;124;38;5;17mTEXT\033[0m\n";

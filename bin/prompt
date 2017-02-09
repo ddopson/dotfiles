@@ -21,6 +21,7 @@ sub color { return '\[\033[' . join(';', @_) . 'm\]'; }
 my $green0 = color(0, 37, 42); # dull white on green
 my $green1 = color(1, 97, 42); # dull white on green
 my $green2 = color(1, 93, 42); # dull white on green
+my $green_bg = '\[\033[48;5;28m';
 my $red0 = color(0, 37, 41); # dull white on red
 my $red1 = color(1, 97, 41); # bold white on red
 my $red2 = color(1, 93, 41); # bold yellow on red
@@ -51,6 +52,8 @@ print "PS1='" . join('',
       $c_host,    $hostname,
       $grey,      ':',
       $blue,      $cwd,
+      $no_color,  ' ',
+      $green_bg, '$(prompt-git-branch)',
       $no_color,  '\n',
       $grey,      $timestamp,
                   ' #',
