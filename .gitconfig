@@ -51,13 +51,14 @@
 
 [pretty]
   # Key:
-  # %h: abbreviated commit hash
-  # %ad: author date (format respects --date= option)
-  # %an: author name
-  # %s: subject
-  # %d: ref names, like the --decorate option of git-log
+  # %h: abbreviated commit hash (bright yellow)
+  # %ar: author date, relative (bright green)
+  # %an: author name (red)
+  # %s: subject (plain)
+  # %d: ref names, like --decorate (pink)
   hist      = "\
 %C(bold yellow)%h\
+%C(reset)%C(yellow) %t\
 %C(bold green) (%ar)\
 %C(reset)%C(red) [%an]\
 %C(reset) %s\
@@ -74,21 +75,19 @@
 %C(reset)"
 
   # Key:
-  # %h: abbreviated commit hash
-  # %d: ref names, like the --decorate option of git-log
   # %gD: reflog selector, e.g., refs/stash@{1}
-  # %aD: author date, RFC2822 style
-  # %aN: author name (respecting .mailmap, see git-shortlog(1) or git-blame(1))
   # %gs: reflog subject
-  # %s: subject
+  # (remainder same as pretty=hist)
   ghist     = "\
-%C(bold yellow) %h\
+%C(bold blue)%gD\
+%C(reset)%C(blue) %gs\n\
+\
+%C(bold yellow)%h\
+%C(bold green) (%ar)\
+%C(reset)%C(red) [%an]\
+%C(reset) %s\
 %C(bold red) %d\
-%C(bold yellow) %gD\
-%C(reset) %aD\
-%C(red) [%an]\
-%C(green) %gs\
-%C(reset) %s"
+%C(reset)"
 
 # DAILY: aliases core to my workflow.
 [alias]
@@ -104,6 +103,7 @@
   b            = !git branch -vv
   ba           = !git branch -avv
   vs           = !git --paginate versus # Defined below.
+  vb           = !git vs blank
 
   # Rebasing
   abort        = rebase --abort
@@ -128,8 +128,30 @@
   mmmm    = !git --no-pager mlog
 
   # Reflog history
-  glog    = !git log --color=always --date=relative -g --invert-grep --grep=commit: --pretty=ghist
-  g       = !git --no-pager glog -10
+  glog    = !"\
+    git log             \
+      --color=always    \
+      --date=relative   \
+      --walk-reflogs    \
+      --invert-grep     \
+      --grep-reflog=ceheckout: \
+      --pretty=ghist \
+      "$@" \
+    | perl -ne '\
+      if (m/HEAD/ && !m/HEAD.*checkout/) { \
+        $print = 2; \
+        $primed = 1; \
+      } \
+      if ($primed and m/HEAD.*checkout/) { \
+        $print = 1; \
+        $primed = 0; \
+      } \
+      if ($print) { \
+        print; \
+        $print -= 1; \
+      };'"
+
+  g       = !git --no-pager glog
   gg      = !git --no-pager glog -20
   ggg     = !git --no-pager glog -40
   gggg    = !git --no-pager glog
@@ -182,10 +204,10 @@
     A=\"${A-origin/master}\"; \
     B=\"$(git symbolic-ref HEAD --short || git rev-parse HEAD)\"; \
     echo From \"$A..$B:\"; \
-    git --no-pager hlog $A..$B \"${O[@]}\"; \
+    git --no-pager mlog $A..$B \"${O[@]}\"; \
     echo; \
     echo From \"$B..$A:\"; \
-    git --no-pager hlog $B..$A \"${O[@]}\"; \
+    git --no-pager mlog $B..$A \"${O[@]}\"; \
     "
 
   # For repos with multiple working trees [git-worktree]. Parking a secondary
@@ -200,6 +222,8 @@
     echo \"Detaching HEAD from $(git current-branch) to $(git rev-parse HEAD)\"; \
     git-checkout --quiet $(git rev-parse HEAD)"
   retach = !git-checkout $(git name-rev --name-only HEAD)
+
+  drop = !git5 drop "$@" && git b -D "$@"
 
   # Fetch-Rebase: pure AWESOMEness.
   # Fetches 'origin' and rebases the current branch on top of origin/master.
@@ -259,26 +283,29 @@
 ###############################################################################
 # DEMO: demonstrate git's behavior and effed-up flags architecture.
 [alias]
-  # Document symbolic name patterns.
-  #    {input}       =  {symbolic0}  |    {symbolic1}    |  {symbolic2}
-  #  --------------------------------|-------------------|-------------
-  #  HEAD(=branch)   =     HEAD      |      branch       |    branch
-  #  HEAD(=88916d7)  =     HEAD      |  exported/branch  |      ''
-  #  branch          =    branch     |      branch       |      ''
-  #  invalid         =      ''       |     {error!}      |      ''
+  # Document symbolic name patterns (this is way more messy than it seems).
+  #    {input}       =  {symbolic0}  |   {symbolic1}   |  {symbolic2}
+  #  --------------------------------|-----------------|-------------
+  #  HEAD(=branch)   =     HEAD      |     branch      |    branch
+  #  HEAD(=88916d7)  =     HEAD      |    branch_2     |      ''
+  #  branch          =    branch     |     branch      |      ''
+  #  invalid         =      ''       |    {error!}     |      ''
   symbolic0 = rev-parse --verify --quiet --symbolic  # Literal.
   symbolic1 = name-rev --always --name-only          # Branch name.
   symbolic2 = symbolic-ref --quiet --short           # HEAD-to-branch-name (one-trick-pony)
   symbolic-demo = !"\
-    BNAME=cluston_2x2k; \
-    HASH=88916d7; \
+    HASH=$(git rev-parse HEAD); \
+    BNAME=$(git current-branch); \
+    echo HASH=\"$HASH\"; \
+    echo BNAME=\"$BNAME\"; \
     for method in symbolic0 symbolic1 symbolic2; do \
-      git checkout --quiet $BNAME || exit; \
-      echo \"$method: HEAD => $(git $method HEAD)\"; \
-      git checkout --quiet $HASH || exit; \
-      for name in HEAD $BNAME $HEAD inval1d; do \
+      git checkout --quiet \"$HASH\" || exit; \
+      echo \"$method: deHEAD => $(git $method HEAD)\"; \
+      git checkout --quiet \"$BNAME\" || exit; \
+      for name in HEAD \"$BNAME\" \"$HASH\" inval1d; do \
         echo \"$method: $name => $(git $method $name)\"; \
       done; \
       echo; \
-    done \
+    done; \
+    git checkout --quiet \"$BNAME\"; \
     "
