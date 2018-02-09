@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 command_name" 1>&2
+fi
+
+# Unfortunately, the version of coreutils installed on my workstation (a Debian-ish distro)
+# has a very primative "which" command that fails to find executable scripts; ie, for
+# whatever reason, it only discovers compiled binaries. I use a *lot* of executable scripts,
+# so this is a major problem.
+#
+# This wrapper script implements "which" for both binaries and scripts.
+#
+if [ -e /usr/bin/whereis ]; then
+  # Search dirs in the $PATH variable for the specified command.
+  #
+  # Syntax Explanation:
+  #
+  # Note that whereis accepts the list of search directories as positional arguments,
+  # sandwiched between "-B" and "-f". ie, "whereis -B dir1 dir2 dir3 -f command".
+  #
+  # The ${PATH//:/ } idiom swaps ":" for " " in the $PATH variable, and then "bash -c"
+  # parses these spaces as separating distinct positional arguments, passed to whereis.
+  #
+  bash -c "whereis -b -B ${PATH//:/ } -f $@"
+elif [ -e /usr/local/bin/gwhich ]; then
+  # This is probably only used on my Mac.
+  /usr/local/bin/gwhich --tty-only --all --read-functions --read-alias --show-dot --show-tilde "$@"
+elif [ -e /usr/bin/which ]; then
+  # At least use "-a" to print all entries, not just the first one.
+  /usr/bin/which -a "$@"
+fi
+
+# Also look for aliases, but stay silent if nothing is found.
+alias "$@" 2> /dev/null

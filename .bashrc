@@ -4,8 +4,13 @@
 ## BATCH-MODE CONFIG
 ####################################################################################################
 
-export COREUTILS='gnu'
-export PATH="$(/bin/echo '
+function JOIN_WITH_COLONS() {
+  /bin/echo "$@" | perl -ne '
+      push @tokens, split(/\s+/);
+      END { print join ":", @tokens; }'
+}
+
+export PATH="$(JOIN_WITH_COLONS '
   ~/gbin
   ~/bin
   ~/bin/coreutils
@@ -23,9 +28,18 @@ export PATH="$(/bin/echo '
   /sbin
 
   ~/google-cloud-sdk/bin
-  ' | /usr/bin/perl -ne 'm/([^\s]+)/ and push @a, $1; END { print join ":", @a; }')"
+')"
 
-
+# COREUTILS is used as a flag in the ~/bin/coreutils directory to switch which version is executed
+# for various command-line utilities: the BSD versions pre-installed on MacOS, or the GNU versions
+# that are pre-installed on most Linux distros. The slight variations in flags and behavior can
+# break scripts written for the other platform. Generally, I find the GNU versions to be superior,
+# since the ary more flexible on flag ordering, and typically provide a super-set of functionality.
+#
+# To get the GNU tools on Mac via use this switching logic, simply install tools like "which" as
+# into /usr/local/bin/gwhich. TODO(ddopson): document the Homebrew install steps, which I've long
+# since forgotten; I don't really run scripts on MacOS anymore.
+export COREUTILS='gnu'
 
 # If not running interactively, don't do anything past this point
 [ -z "$PS1" ] && return
@@ -34,6 +48,25 @@ export PATH="$(/bin/echo '
 ####################################################################################################
 ## INTERACTIVE CONFIG
 ####################################################################################################
+
+# Use EXECIGNORE to hide binaries from auto-complete where they alias a script prefix.
+#
+# For example, I want "bbo" to immediately auto-complete as "bbo-blaze-build-c-opt";
+# however, if "bbox" is on the PATH, then auto-complete instead pops an ambiguity
+# resolution menu, breaking my flow.
+#
+# Ideally, "bbox" would only be hidden from auto-complete, allowing "bbox" to still run
+# as a command, but unfortunately, EXECIGNORE blocks both auto-complete *and* execution.
+# For a tool like bbox, which I never use, and only discovered via auto-complete menus,
+# losing easy $PATH access is a pefectly acceptable trade-off for improving my daily flow.
+#
+# Note that bbox is only blocked from $PATH discovery, and would run as /usr/bin/bbox.
+#
+# To avoid accidentally regressing scripts, EXECIGNORE is deliberately *NOT* exported.
+#
+EXECIGNORE="$(JOIN_WITH_COLONS '
+    /usr/bin/bbox
+')"
 
 if [ -f /etc/bashrc ]; then
   . /etc/bashrc
@@ -73,13 +106,6 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-
-# Set up some Ruby constants for 'better' performance
-export RUBY_HEAP_MIN_SLOTS=500000
-export RUBY_HEAP_SLOTS_INCREMENT=250000
-export RUBY_HEAP_SLOTS_GROWTH_FACTOR=1
-export RUBY_GC_MALLOC_LIMIT=50000000
-
 # Ant color support on MacOS
 if [ `uname` = "Darwin" ]; then
   alias ant=ant-wrapper.sh
@@ -94,15 +120,10 @@ alias cd......='cd ../../../../..'
 alias cd.......='cd ../../../../../..'
 alias echo_result="echo true || echo false"  # use it like "[ ... some test ... ] && echo_result"
 
-if [ -e /usr/local/bin/gwhich ]; then
-  alias which="(alias; declare -f) | /usr/local/bin/gwhich --tty-only --all --read-functions --read-alias --show-dot --show-tilde"
-else
-  alias which="/usr/bin/which -a"
-fi
 alias bashrc='source ~/.profile'
-alias cuke='time bundle exec cucumber'
 
 if [ -x ~/refresh-creds ]; then
+  # This is only used on my corporate workstation.
   ~/refresh-creds
 fi
 
