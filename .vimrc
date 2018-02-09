@@ -75,6 +75,7 @@ imap <F4> <ESC>:set tabstop=13 softtabstop=13 shiftwidth=13 noexpandtab <CR>i
 
 " Default to Tab mode for Makefile and *.php
 augroup module
+  "autocmd BufRead,BufNewFile *.blueprint set syntax=python
   autocmd BufRead,BufNewFile *.php set tabstop=5 softtabstop=5 shiftwidth=5 noexpandtab
   autocmd BufRead,BufNewFile Makefile set tabstop=5 softtabstop=5 shiftwidth=5 noexpandtab
 augroup END
