@@ -19,6 +19,8 @@ syntax keyword cType schar char32 uword_t unique_ptr shared_ptr vector vector32 
 syntax keyword cppCast unique_cast unique_cast_unsafe up_cast down_cast make_unique make_shared
 
 syntax keyword cPreCondit ValueOrDie CHECK_OK CHECK CHECK_LT CHECK_LE CHECK_EQ CHECK_GT CHECK_GE CHECK_NE
+syntax keyword cPreCondit ValueOrDie QCHECK_OK QCHECK QCHECK_LT QCHECK_LE QCHECK_EQ QCHECK_GT QCHECK_GE QCHECK_NE
+syntax keyword cPreCondit ValueOrDie ASSERT_OK ASSERT ASSERT_LT ASSERT_LE ASSERT_EQ ASSERT_GT ASSERT_GE ASSERT_NE
 
 
 syntax keyword cppKeyword declval
