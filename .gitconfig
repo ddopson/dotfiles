@@ -93,7 +93,11 @@
 [alias]
   # Short Forms
   co           = checkout
-  stat         = status --short --branch
+  st           = status --short --branch --untracked-files=no
+  sta          = status --short --branch --untracked-files=no
+  stat         = status --short --branch --untracked-files=normal
+  statall         = status --short --branch --untracked-files=normal --ignored=traditional
+  which        = help
   ss           = show --stat
   dc           = diff --cached
   fixup        = commit --fixup
