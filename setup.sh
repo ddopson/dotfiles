@@ -41,3 +41,23 @@ touch ~/.gitcookies
 chmod 600 ~/.gitcookies
 touch ~/.netrc
 chmod 600 ~/.netrc
+
+
+if grep user ~/.gitconfig.local >/dev/null; then
+  echo "Looks configured: ~/.gitconfig.local"
+else
+  echo "TODO: configure ~/.gitconfig.local. For example:"
+  echo "[user]"
+  echo "  user = ddopson"
+  echo "  name = Dave Dopson"
+  echo "  email = ddopson@gmail.com"
+fi
+
+if grep machine ~/.netrc >/dev/null; then
+  echo "Looks configured: ~/.netrc"
+else
+  echo "TODO: configure ~/.gitconfig.local. For example:"
+  echo "  machine github.com"
+  echo "  login ddopson@gmail.com"
+  echo "  password [WHAT PASSWORD?]"
+fi
