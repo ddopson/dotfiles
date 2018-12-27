@@ -66,6 +66,7 @@ export COREUTILS='gnu'
 #
 EXECIGNORE="$(JOIN_WITH_COLONS '
     /usr/bin/bbox
+    /usr/bin/fix-qdf
 ')"
 
 if [ -f /etc/bashrc ]; then
