@@ -73,12 +73,6 @@ imap <F3> <ESC>:set tabstop=13 softtabstop=2 shiftwidth=2 expandtab <CR>i
 map <F4> <ESC>:set tabstop=13 softtabstop=13 shiftwidth=13 noexpandtab <CR>
 imap <F4> <ESC>:set tabstop=13 softtabstop=13 shiftwidth=13 noexpandtab <CR>i
 
-" Default to Tab mode for Makefile and *.php
-augroup module
-  "autocmd BufRead,BufNewFile *.blueprint set syntax=python
-  autocmd BufRead,BufNewFile *.php set tabstop=5 softtabstop=5 shiftwidth=5 noexpandtab
-  autocmd BufRead,BufNewFile Makefile set tabstop=5 softtabstop=5 shiftwidth=5 noexpandtab
-augroup END
 
 
 
@@ -103,4 +97,15 @@ endif
 " Pathogen for managing other vim plugins
 call pathogen#infect()
 
-" source /usr/share/vim/google/google.vim
+source /usr/share/vim/google/google.vim
+
+
+augroup module
+  autocmd BufRead,BufNewFile *.inc set syntax=cpp
+
+  autocmd BufRead,BufNewFile *.blueprint set syntax=python
+
+  " Default to Tab mode for Makefile and *.php
+  autocmd BufRead,BufNewFile *.php set tabstop=5 softtabstop=5 shiftwidth=5 noexpandtab
+  autocmd BufRead,BufNewFile Makefile set tabstop=5 softtabstop=5 shiftwidth=5 noexpandtab
+augroup END
