@@ -2,6 +2,22 @@
 
 git rev-parse 2>/dev/null || exit
 
+
+TOP_FQ="$(git rev-parse --show-toplevel)"
+TOP="$(basename "${TOP_FQ}")"
+
+if [[ "$TOP" == "ws4" ]]; then
+  echo -ne '\033[48;5;22m'  # background: greenish
+elif [[ "$TOP" == "ws5" ]]; then
+  echo -ne '\033[48;5;24m' # background: green-blue
+elif [[ "$TOP" == "ws6" ]]; then
+  echo -ne '\033[48;5;26m' # background: blueish
+elif [[ "$TOP" == "ws7" ]]; then
+  echo -ne '\033[48;5;58m' # background: beige-ish
+else
+  echo -ne '\033[48;5;52m' # background: deep-red
+fi
+
 echo -ne '\033[38;5;15m' # bold-white-fg
 BRANCH=$(git symbolic-ref --quiet --short HEAD)
 echo -n "$BRANCH "
