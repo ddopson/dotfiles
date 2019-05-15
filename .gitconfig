@@ -21,6 +21,7 @@
 
 [diff]
   renames = true
+  renameLimit = 2000
   noprefix = true # drops the annoying a/filename.foo b/filename.foo prefixes
 
 [merge]
@@ -96,12 +97,14 @@
   st           = status --short --branch --untracked-files=no
   sta          = status --short --branch --untracked-files=no
   stat         = status --short --branch --untracked-files=normal
-  statall         = status --short --branch --untracked-files=normal --ignored=traditional
+  statall      = status --short --branch --untracked-files=normal --ignored=traditional
   which        = help
   ss           = show --stat
   dc           = diff --cached
   fixup        = commit --fixup
   amend        = commit --amend --no-edit
+  umend        = "!git add -u; git amend"
+  rebi         = rebase -i
   pick         = cherry-pick
   ff           = merge --ff-only
   b            = !git branch -vv
