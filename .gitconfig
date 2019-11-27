@@ -103,7 +103,8 @@
   dc           = diff --cached
   fixup        = commit --fixup
   amend        = commit --amend --no-edit
-  umend        = "!git add -u; git amend"
+  export       = "!git commit --amend --no-edit; git5 export"
+  u            = "!git add -u; git st"
   rebi         = rebase -i
   pick         = cherry-pick
   ff           = merge --ff-only

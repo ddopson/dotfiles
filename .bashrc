@@ -140,3 +140,13 @@ if [ "$TERM" = "screen" ]; then
   # Fix issues w/ VIM handling "screen" in bonkers ways.
   TERM=xterm-256color
 fi
+
+
+alias ws1='cd ${PWD/ws?/ws1}'
+alias ws2='cd ${PWD/ws?/ws2}'
+alias ws3='cd ${PWD/ws?/ws3}'
+alias ws4='cd ${PWD/ws?/ws4}'
+alias ws5='cd ${PWD/ws?/ws5}'
+alias ws6='cd ${PWD/ws?/ws6}'
+alias ws7='cd ${PWD/ws?/ws7}'
+alias ws8='cd ${PWD/ws?/ws8}'
