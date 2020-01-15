@@ -58,7 +58,8 @@ imap <S-Down> <ESC>10j10<C-E>zzi
 map <C-Up> <C-u>M
 map <C-Down> <C-d>M
 
-
+" Shortcut "d-z" deletes the rest of the line.
+nnoremap dz d$
 
 " Tabs = two spaces
 set tabstop=13 softtabstop=2 shiftwidth=2 expandtab
