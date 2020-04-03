@@ -26,6 +26,7 @@ backup_and_link .inputrc
 backup_and_link .irbrc
 backup_and_link .vim
 backup_and_link .vimrc
+backup_and_link .selected_editor
 backup_and_link bin
 
 # Ensure .ssh dir sanity
