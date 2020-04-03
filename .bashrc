@@ -20,6 +20,8 @@ export PATH="$(JOIN_WITH_COLONS '
   ~/.rbenv/bin
   ~/.rbenv/shims
 
+  ~/.iterm2
+
   /usr/local/bin
   /usr/local/sbin
   /usr/bin
