@@ -45,7 +45,7 @@ chmod 600 ~/.netrc
 
 
 if grep user ~/.gitconfig.local >/dev/null; then
-  echo "Looks configured: ~/.gitconfig.local"
+  echo "Looks good: ~/.gitconfig.local"
 else
   echo "TODO: configure ~/.gitconfig.local. For example:"
   echo "[user]"
@@ -55,7 +55,7 @@ else
 fi
 
 if grep machine ~/.netrc >/dev/null; then
-  echo "Looks configured: ~/.netrc"
+  echo "Looks good: ~/.netrc"
 else
   echo "TODO: configure ~/.gitconfig.local. For example:"
   echo "  machine github.com"
