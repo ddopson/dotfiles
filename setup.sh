@@ -63,4 +63,12 @@ else
   echo "  password [WHAT PASSWORD?]"
 fi
 
-echo "To install iTerm2 integration: curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash"
+if grep "Checking cred status" ~/refresh-creds >/dev/null; then
+  echo "Looks good: ~/refresh-creds"
+else
+  echo "Remember to copy ~/refresh-creds"
+fi
+
+echo
+echo "To install iTerm2 integration:"
+echo "curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash"
