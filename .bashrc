@@ -114,7 +114,7 @@ if [ `uname` = "Darwin" ]; then
   alias ant=ant-wrapper.sh
 fi
 
-alias cdp='cd -P'
+alias cdp='cd -P $(pwd)'
 alias cd..='cd ..'
 alias cd...='cd ../..'
 alias cd....='cd ../../..'
