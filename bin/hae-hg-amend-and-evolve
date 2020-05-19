@@ -1,0 +1,3 @@
+#!/bin/bash
+
+hg amend && hg evolve
