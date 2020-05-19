@@ -100,6 +100,9 @@ call pathogen#infect()
 
 source /usr/share/vim/google/google.vim
 
+" This would enable scroll-wheel support from command-line Vim, which is cool,
+" but it breaks select-to-copy while Vim is in find-mode.
+"set mouse=a
 
 augroup module
   autocmd BufRead,BufNewFile *.inc set syntax=cpp
