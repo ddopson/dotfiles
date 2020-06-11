@@ -27,7 +27,9 @@ syntax keyword cPreCondit ValueOrDie ASSERT_OK ASSERT ASSERT_LT ASSERT_LE ASSERT
 
 
 syntax keyword cppAttribute1 inline SCAM_INLINE SCAM_SIMD_INLINE SCAM_SSE4_INLINE SCAM_AVX1_INLINE SCAM_AVX2_INLINE SCAM_AVX512_INLINE
+syntax keyword cppAttribute1 inline SCAM_SIMD_INLINE_LAMBDA SCAM_SSE4_INLINE_LAMBDA SCAM_AVX1_INLINE_LAMBDA SCAM_AVX2_INLINE_LAMBDA SCAM_AVX512_INLINE_LAMBDA
 syntax keyword cppAttribute2 SCAM_OUTLINE SCAM_SIMD_OUTLINE SCAM_SSE4_OUTLINE SCAM_AVX1_OUTLINE SCAM_AVX2_OUTLINE SCAM_AVX512_OUTLINE
+
 
 hi cppAttribute1 term=underline ctermfg=5 guifg=Purple
 hi cppAttribute2 term=underline cterm=underline ctermfg=5 gui=underline guifg=SlateBlue
