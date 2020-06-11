@@ -1,0 +1,11 @@
+
+[templates]
+# Put a blank line between revisions. Way easier for me to skim.
+google_compact = '{separate("\n", GOOG_line1, GOOG_line2)}\n\n'
+
+[templatealias]
+# Add revision numbers before the hash.
+google_compact_uniq_id = '{GOOG_rev_and_node}'
+
+[trainingwheels]
+prevent-push-dirty=false

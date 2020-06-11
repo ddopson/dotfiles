@@ -22,6 +22,7 @@ backup_and_link .bashrc
 backup_and_link .profile
 backup_and_link .gitconfig
 backup_and_link .git5rc
+backup_and_link .hgrc
 backup_and_link .inputrc
 backup_and_link .irbrc
 backup_and_link .vim
