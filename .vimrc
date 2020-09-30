@@ -107,7 +107,7 @@ source /usr/share/vim/google/google.vim
 augroup module
   autocmd BufRead,BufNewFile *.inc set syntax=cpp
 
-  autocmd BufRead,BufNewFile *.blueprint set syntax=python
+  autocmd BufRead,BufNewFile *.blueprint set syntax=gcl
 
   " Default to Tab mode for Makefile and *.php
   autocmd BufRead,BufNewFile *.php set tabstop=5 softtabstop=5 shiftwidth=5 noexpandtab
