@@ -1,0 +1,39 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $git_branch = `git symbolic-ref --quiet --short HEAD 2>/dev/null`;
+my $git_sha = "";
+if ($git_branch) {
+  chomp $git_branch;
+  $git_sha = `git log -1 --format='%C(bold yellow)%h%C(reset)'`;
+}
+my $git = "$git_branch $git_sha";
+
+# Colors. Run 'color-wheel' to see what the numbers mean.
+sub color { return "\033\[" . join(';', @_) . "m"; }
+
+my $bg_red = color(48, 5, 88);
+my $bg_purple = color(48, 5, 54);
+my $bg_green = color(48, 5, 28);
+my $bg_grey = color(48, 5, 239);
+my $clear = color(0, '');
+my $bold = color(1, 37);
+my $blue = color(1, 37, 44);
+
+my $pwd = $ENV{PWD};
+$pwd =~ s/^$ENV{HOME}/~/;
+
+my $pwd_color = $blue;
+if ($pwd =~ m/^\/TUNING/) {
+  $pwd_color = "${bold}${bg_purple}"
+}
+if ($pwd =~ m/^\/EXEC/) {
+  $pwd_color = "${bold}${bg_red}"
+}
+if ($pwd =~ m/^\/ws/) {
+  $pwd_color = "${bold}${bg_green}"
+}
+
+print "${pwd_color}${pwd}${clear} ${git}"
