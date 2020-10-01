@@ -1,43 +1,104 @@
 #!/usr/bin/perl
 
-# System Colors
-print "ANSI-16 colors:\n";
-for ($color = 0; $color < 16; $color++) {
-    $cc = sprintf "%2d", $color;
-    print "\033[48;5;${color}m ${cc} ";
-    print "\033[0m\n" if $color == 7 or $color == 15;
-}
+sub color { return "\033[" . join(';', @_) . 'm'; }
+sub fg_color { return color(38, 5, @_); }
+my $clear = color(0);
 
-# Color Cube
-print "\nColor cube, 6x6x6:\n";
-$rn = 3;
-for ($r1 = 0; $r1 < 6; $r1 += $rn) {
-  for ($green = 0; $green < 6; $green++) {
-      for ($red = $r1; $red < $r1+$rn; $red++) {
-               for ($blue = 0; $blue < 6; $blue++) {
-                   $color = 16 + ($red * 36) + ($green * 6) + $blue;
-                   $ccc = sprintf "%3d", $color;
-                   print "\033[48;5;${color}m ${ccc} ";
-               }
-               print "\033[0m ";
-      }
-      print "\n";
+my $soft = color(2);
+my $bold = color(1);
+my $under = color(4);
+my $strike = color(9);
+my $softstrike = color(9, 2);
+
+my $color_clr = $clear . fg_color(11, 2);
+my $color_esc = $clear . fg_color(11);
+
+# Color Cubes
+sub print_colors {
+  ($prefix, $only_16) = @_;
+  print " ('${color_esc}\\033[${color_clr}${prefix}???${color_esc}m${clear}'):\n\n";
+  # ANSI-16 Colors
+  for ($color = 0; $color < 16; $color++) {
+      $cc = sprintf "%2d", $color;
+      print "\033[${prefix}${color}m ${cc} ${clear}";
+      print "\n" if $color == 7;
   }
-  print "\n"
+  print "\n\n";
+  return if ($only_16);
+
+  # Color Cube
+  $rn = 3;
+  for ($r1 = 0; $r1 < 6; $r1 += $rn) {
+    for ($green = 0; $green < 6; $green++) {
+        for ($red = $r1; $red < $r1+$rn; $red++) {
+                 for ($blue = 0; $blue < 6; $blue++) {
+                     $color = 16 + ($red * 36) + ($green * 6) + $blue;
+                     $ccc = sprintf "%3d", $color;
+                     print "\033[${prefix}${color}m ${ccc} ";
+                 }
+                 print "${clear} ";
+        }
+        print "\n";
+    }
+    print "\n";
+  }
+  # Greyscale Ramp
+  for ($color = 232; $color < 256; $color++) {
+      $ccc = sprintf "%3d", $color;
+      print "\033[${prefix}${color}m ${ccc} ";
+      print "${clear}\n" if ($color % 6 == 3)
+  }
+  print "${clear}\n\n";
 }
 
-# Greyscale
-print "Grayscale ramp:\n";
-for ($color = 232; $color < 256; $color++) {
-    $ccc = sprintf "%3d", $color;
-    print "\033[48;5;${color}m ${ccc} ";
+sub print_colors_16 {
+  print_colors(@_, true)
 }
-print "\033[0m\n\n";
 
 # Tutorial
-$fg="\033[38;5;12m17\033[0m";
-$bg="\033[38;5;124m124\033[0m";
-print "Foreground:  echo -ne '\\033[38;5;${fg}m'\n";
-print "Background:  echo -ne '\\033[48;5;${bg}m'\n";
-print "Clear:       echo -ne '\\033[0m'\n";
-print "Example:     echo -e '\\033[48;5;${bg};38;5;${fg}mTEXT\\033[0m'  =>  \033[48;5;124;38;5;17mTEXT\033[0m\n";
+sub print_tutorial {
+  $fg=46;
+  $bg=124;
+  $fmt_fg="\033[38;5;${fg}m${fg}\033[0m";
+  $fmt_bg="\033[48;5;${bg}m${bg}\033[0m";
+  print "Foreground:  echo -ne '\\033[38;5;${fmt_fg}m'\n";
+  print "Background:  echo -ne '\\033[48;5;${fmt_bg}m'\n";
+  print "Clear:       echo -ne '\\033[0m'\n";
+  print "Composition: echo -ne 'TEXT \\033[48;5;${fmt_bg};38;5;${fmt_fg}mCOLORED TEXT\\033[0m TEXT'  " .
+        "=>  TEXT \033[38;5;${fg};48;5;${bg}mCOLORED TEXT\033[0m TEXT\n";
+}
+
+# Tutorial
+print_tutorial
+
+print "\n\n";
+print "\n\n";
+
+# Foreground
+print "${soft}Soft${clear} FOREGROUND Colors";
+print_colors("2;38;5;");
+
+print "Normal FOREGROUND Colors";
+print_colors("38;5;");
+
+print "${bold}Bold${clear} FOREGROUND Colors";
+print_colors("1;38;5;");
+
+# Background
+print "BACKGROUND Colors";
+print_colors("48;5;");
+
+# Effects
+print "All effects";
+print_colors_16("");
+
+print "Effect: ${under}underline${clear}";
+print_colors_16("4;38;5;");
+
+print "Effect: ${strike}strikethrough${clear}";
+print_colors_16("9;38;5;");
+
+print "Effect: ${softstrike}soft strike${clear}";
+print_colors_16("2;9;38;5;");
+
+
