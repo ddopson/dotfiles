@@ -144,6 +144,14 @@ if [ "$TERM" = "screen" ]; then
   TERM=xterm-256color
 fi
 
+if [[ "$TERM" = "tmux-256color" ]]; then
+  # This is a hack that fixes an annoying issue in Vim where, when
+  # TERM=tmux-256color, Shift-Up and SHift-Down result in bell-alerts rather
+  # than traversing the document as my .vicrc intends. I don't fully understand
+  # the underlying issue, but changing the TERM variable suppresses it and I
+  # haven't noticed any other ill effects from doing so.
+  TERM=xterm-256color
+fi
 
 alias ws1='cd ${PWD/ws?/ws1}'
 alias ws2='cd ${PWD/ws?/ws2}'
