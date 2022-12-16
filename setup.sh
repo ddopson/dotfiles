@@ -55,15 +55,6 @@ else
   echo "  email = ddopson@gmail.com"
 fi
 
-if grep machine ~/.netrc >/dev/null; then
-  echo "Looks good: ~/.netrc"
-else
-  echo "TODO: configure ~/.gitconfig.local. For example:"
-  echo "  machine github.com"
-  echo "  login ddopson@gmail.com"
-  echo "  password [WHAT PASSWORD?]"
-fi
-
 if grep "Checking cred status" ~/refresh-creds >/dev/null; then
   echo "Looks good: ~/refresh-creds"
 else

@@ -5,9 +5,16 @@ Installation
 ----------
 ````bash
 cd
-git clone https://github.com/ddopson/dotfiles.git
+git clone https://SECRET_TOKEN@github.com/ddopson/dotfiles.git
 ./dotfiles/setup.sh # symlink dotfiles, making dated backups of existing versions
 ````
+
+Note that the old mechanism of password access no longer works with GitHub, so
+one has to create auth tokens to be able to push to a GitHub repo from the
+command-line. Microsoft has made an enormously complicated token system, but the
+old "heavyweight" tokens are still supported, and the only way I've found so far
+for storing that token is above, in the URL of the repo during cloning (or by
+editing the "origin" afterwards, but cloning is easier).
 
 Customization
 ----------
@@ -20,25 +27,6 @@ Customization
   email = ddopson@gmail.com
 
 [credential]
-  helper = osxkeychain
-
-[git-working-branch]
-  username = ddopson
-  token = a123uber456secret789ceprivate000key78
+  helper = cache
 ````
 
-**`~/.netrc:`**
-````
-machine github.com
-login ddopson@gmail.com
-password SECRET_PASSWORD
-````
-
-Pushing (for me)
-----------
-**`~/.netrc:`**
-````
-machine github.com
-login ddopson@gmail.com
-password 1234567891
-````
