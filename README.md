@@ -19,9 +19,21 @@ Customization
   name = Dave Dopson
   email = ddopson@gmail.com
 
+# Setting credentials.helper to `store` means that when `git` prompts for a
+# username/password challenge, the supplied password gets saved, in plaintext,
+# to ~/.git-credentials. Alternatively, `cache` causes `git` to retain the
+# credential in RAM for up to 15 minutes before purging it, more like `sudo`.
 [credential]
-  helper = cache
+  helper = store
 ````
+
+To get a GitHub access token:
+ * "GitHub Settings" -> "Developer settings" -> "Personal access tokens"
+ * A simple legacy token with unlimited lifetime is easiest, if less secure.
+ * The token can be provided to `git` during the command-line username/password
+   challenge
+ * The `git` tooling will then write it to ~/.git-credentials if so configured
+   as above.
 
 New MacBook Checklist
 ----------

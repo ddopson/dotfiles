@@ -1,12 +1,3 @@
-
-# Put this stuff in ~/.gitconfig.local
-# [user]
-#   user = ddopson
-#   name = Dave Dopson
-#   email = ddopson@google.com
-# [http]
-#  cookiefile = $HOME/.gitcookies - needs absolute path
-
 [include]
   # For username / creds / etc
   path = ~/.gitconfig.local
