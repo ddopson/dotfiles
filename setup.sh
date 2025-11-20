@@ -45,6 +45,7 @@ touch ~/.netrc
 chmod 600 ~/.netrc
 
 
+echo
 if grep user ~/.gitconfig.local >/dev/null; then
   echo "Looks good: ~/.gitconfig.local"
 else
@@ -58,9 +59,14 @@ fi
 if grep "Checking cred status" ~/refresh-creds >/dev/null; then
   echo "Looks good: ~/refresh-creds"
 else
-  echo "Remember to copy ~/refresh-creds"
+  echo
+  echo "TODO: copy ~/refresh-creds (and run setup-workspaces.sh)"
 fi
 
-echo
-echo "To install iTerm2 integration:"
-echo "curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash"
+if [[ -d ~/.iterm2 ]]; then
+  echo "Looks good: iTerm2 integration installed"
+else
+  echo
+  echo "TODO: To install iTerm2 integration:"
+  echo "curl -L https://iterm2.com/shell_integration/install_shell_integration_and_utilities.sh | bash"
+fi
