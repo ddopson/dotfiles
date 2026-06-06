@@ -30,10 +30,10 @@ Customization
 To get a GitHub access token:
  * "GitHub Settings" -> "Developer settings" -> "Personal access tokens"
  * A simple legacy token with unlimited lifetime is easiest, if less secure.
- * The token can be provided to `git` during the command-line username/password
-   challenge
- * The `git` tooling will then write it to ~/.git-credentials if so configured
-   as above.
+ * The token can be provided to `git` as the "password" during the command-line
+   username/password challenge
+ * The `git` tooling stores the secret in ~/.git-credentials, when configured
+   with "helper = store".
 
 New MacBook Checklist
 ----------
