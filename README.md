@@ -28,10 +28,11 @@ Customization
 ````
 
 To get a GitHub access token:
- * "GitHub Settings" -> "Developer settings" -> "Personal access tokens"
- * A simple legacy token with unlimited lifetime is easiest, if less secure.
- * The token can be provided to `git` as the "password" during the command-line
-   username/password challenge
+ * Open https://github.com/settings/personal-access-tokens/new (ie, "GitHub Settings" -> "Developer settings" -> "Personal access tokens" -> "Fine-grained tokens" -> "Generate new token")
+ * Set time to unlimited, add the dotfiles repo, and add the "Contents" permission with Read/Write access. Generate the secret.
+
+ * Running `git push` prompts for username / password.
+ * Use the token as the "password".
  * The `git` tooling stores the secret in ~/.git-credentials, when configured
    with "helper = store".
 
@@ -55,12 +56,3 @@ Map CapsLock => Escape (useful for my Vim bindings):
 Disable trigger-happy trackpad actions:
 * Trackpad => "Tap to click" = false
 * Trackpad => "More Gestures" tab => "Swipe between pages" = Off
-
-Pushing to Repo
-----------
-
-From https://github.com/settings/token, "Generate new token" and create a classic token.
-
-Running `git push` prompts for username (eg, "ddopson@gmail.com") and password. Provide the secret token as the password.
-
-This caches the token in the repo (maybe?), such that subsequent pushes work.
