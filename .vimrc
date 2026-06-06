@@ -98,7 +98,9 @@ endif
 " Pathogen for managing other vim plugins
 call pathogen#infect()
 
-source /usr/share/vim/google/google.vim
+if filereadable("/usr/share/vim/google/google.vim")
+  source /usr/share/vim/google/google.vim
+endif
 
 " This would enable scroll-wheel support from command-line Vim, which is cool,
 " but it breaks select-to-copy while Vim is in find-mode.
